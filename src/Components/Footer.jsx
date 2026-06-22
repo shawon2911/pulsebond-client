@@ -40,8 +40,8 @@ export default function Footer() {
                   alt="logo"
                 />
                 <p className="font-bold text-2xl">
-                  <span className="text-white">Pulse</span>
-                  <span className="text-crimson-dark">Bond</span>
+                  <span className="text-white font-display">Pulse</span>
+                  <span className="text-crimson-dark font-display">Bond</span>
                 </p>
               </div>
             </Link>

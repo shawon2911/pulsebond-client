@@ -31,8 +31,8 @@ export default function Features() {
         {/* section header */}
         <div className="mb-10">
           <span className="text-lg font-bold uppercase tracking-widest text-crimson">
-            Why <span className="text-ink">Pulse</span>
-                  <span className="text-crimson-dark">Bond</span>
+            Why <span className="text-ink font-display">Pulse</span>
+                  <span className="text-crimson-dark font-display">Bond</span>
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-semibold text-ink mt-2">
             Built for trust, speed, and reach

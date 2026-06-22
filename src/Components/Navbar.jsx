@@ -84,7 +84,7 @@ const Navbar = () => {
                   src="/logo.png"
                   alt="logo"
                 />
-                <p className="font-bold text-2xl">
+                <p className="font-bold text-2xl font-display">
                   <span className="text-ink">Pulse</span>
                   <span className="text-crimson-dark">Bond</span>
                 </p>
