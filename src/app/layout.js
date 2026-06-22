@@ -1,6 +1,7 @@
 import { Fraunces, Inter} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Components/Navbar";
+import Footer from "@/Components/Footer";
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -28,6 +29,8 @@ export default function RootLayout({ children }) {
       <body className="font-body bg-paper text-ink min-h-full flex flex-col">
         <Navbar />
         {children}
+        <Footer />
+    
         </body>
     </html>
   );
