@@ -1,7 +1,7 @@
 "use client";
 // import { authClient } from "@/lib/auth-client";
-import districtsData from "@/public/data/districts.json";
-import upazilasData from "@/public/data/upazilas.json";
+import districtsData from "@/data/districts.json";
+import upazilasData from "@/data/upazilas.json";
 import {
   Button,
   Description,
@@ -15,78 +15,220 @@ import {
   Select,
   TextField,
 } from "@heroui/react";
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
-
+import { useState } from "react";
 
 export default function SignUpPage() {
-//   const onSubmit = async (e) => {
-//     e.preventDefault();
-//     const formData = new FormData(e.currentTarget);
-//     const user = Object.fromEntries(formData.entries());
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedUpazila, setSelectedUpazila] = useState("");
+  const [filteredUpazilas, setFilteredUpazilas] = useState([]);
 
-//     await authClient.signUp.email({
-//       ...user,
-//       plan: 'free',
-//     });
+  //   const onSubmit = async (e) => {
+  //     e.preventDefault();
+  //     const formData = new FormData(e.currentTarget);
+  //     const user = Object.fromEntries(formData.entries());
 
-//     redirect('/')
-//   };
+  //     await authClient.signUp.email({
+  //       ...user,
+  //       plan: 'free',
+  //     });
+
+  //     redirect('/')
+  //   };
 
   return (
     <div className=" bg-[radial-gradient(circle_at_30%_20%,#3a0f1c,#15101A_60%)] min-h-screen flex items-center justify-center">
-      <Surface className="w-full max-w-md py-15 px-10 bg-white rounded-2xl">
-        <Form >
+      <Surface className="w-full max-w-2xl py-15 px-10 bg-white rounded-2xl">
+        <Form>
+          <Image
+            height={40}
+            width={40}
+            loading="eager"
+            src="/logo.png"
+            alt="logo"
+            className="mx-auto mb-2"
+          />
           <Fieldset className="w-full">
-            <Fieldset.Legend>Signup</Fieldset.Legend>
-            <Description>Create your account</Description>
-            <Fieldset.Group>
-              <TextField isRequired name="name">
+            <Fieldset.Legend className="text-center font-bold font-display text-2xl my-2">
+              Create your account
+            </Fieldset.Legend>
+
+            <Description className="text-center text-md">
+              Every new account starts as a Donor
+            </Description>
+
+            <Fieldset.Group className="grid grid-cols-6 gap-3">
+              {/* Name */}
+              <TextField isRequired name="name" className="col-span-3">
                 <Label>Name</Label>
-                <Input placeholder="John Doe" variant="secondary" />
+                <Input placeholder="John Doe" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
                 <FieldError />
               </TextField>
 
-              <TextField name="image" type="url">
-                <Label>Image URL</Label>
-                <Input placeholder="Image URL" variant="secondary" />
-                <FieldError />
-              </TextField>
-              <TextField isRequired name="email" type="email">
+              {/* Email */}
+              <TextField
+                isRequired
+                name="email"
+                type="email"
+                className="col-span-3"
+              >
                 <Label>Email</Label>
-                <Input placeholder="john@example.com" variant="secondary" />
+                <Input placeholder="john@example.com" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
                 <FieldError />
               </TextField>
 
-              <TextField isRequired name="password" type="password">
-                <Label>Password</Label>
-                <Input placeholder="Password" variant="secondary" />
+              {/* Image */}
+              <TextField name="image" type="url" className="col-span-6">
+                <Label>Image URL</Label>
+                <Input placeholder="Image URL" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
                 <FieldError />
               </TextField>
 
-              <Select isRequired name="role" placeholder="Select one">
-                <Label>Signup As</Label>
+              {/* Blood Group */}
+              <Select
+                isRequired
+                name="bloodGroup"
+                className="col-span-2"
+                placeholder="Blood group"
+              >
+                <Label>Blood Group</Label>
                 <Select.Trigger>
                   <Select.Value />
                   <Select.Indicator />
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="buyer" textValue="buyer">
-                      Buyer
-                      <ListBox.ItemIndicator />
+                    <ListBox.Item id="A+" textValue="A+">
+                      A+
                     </ListBox.Item>
-                    <ListBox.Item id="seller" textValue="seller">
-                      Seller
-                      <ListBox.ItemIndicator />
+                    <ListBox.Item id="A-" textValue="A-">
+                      A-
+                    </ListBox.Item>
+                    <ListBox.Item id="B+" textValue="B+">
+                      B+
+                    </ListBox.Item>
+                    <ListBox.Item id="B-" textValue="B-">
+                      B-
+                    </ListBox.Item>
+                    <ListBox.Item id="AB+" textValue="AB+">
+                      AB+
+                    </ListBox.Item>
+                    <ListBox.Item id="AB-" textValue="AB-">
+                      AB-
+                    </ListBox.Item>
+                    <ListBox.Item id="O+" textValue="O+">
+                      O+
+                    </ListBox.Item>
+                    <ListBox.Item id="O-" textValue="O-">
+                      O-
                     </ListBox.Item>
                   </ListBox>
                 </Select.Popover>
               </Select>
+
+              {/* District */}
+              <Select
+                className="col-span-2"
+                selectedKey={selectedDistrict}
+                onSelectionChange={(key) => {
+                  setSelectedDistrict(key);
+                  setSelectedUpazila("");
+
+                  const upazilas = upazilasData.filter(
+                    (u) => u.district_id === key,
+                  );
+
+                  setFilteredUpazilas(upazilas);
+                }}
+                placeholder="Select district"
+              >
+                <Label>Select District</Label>
+
+                <Select.Trigger>
+                  <Select.Value />
+                  <Select.Indicator />
+                </Select.Trigger>
+
+                <Select.Popover>
+                  <ListBox>
+                    {districtsData.map((district) => (
+                      <ListBox.Item
+                        key={district.id}
+                        id={district.id}
+                        textValue={district.name}
+                      >
+                        {district.name}
+                      </ListBox.Item>
+                    ))}
+                  </ListBox>
+                </Select.Popover>
+              </Select>
+
+              {/* upazila */}
+              <Select
+                className="col-span-2"
+                selectedKey={selectedUpazila}
+                onSelectionChange={setSelectedUpazila}
+                isDisabled={!selectedDistrict}
+                placeholder="Select upazila"
+              >
+                <Label>Select Upazila</Label>
+
+                <Select.Trigger>
+                  <Select.Value />
+                  <Select.Indicator />
+                </Select.Trigger>
+
+                <Select.Popover>
+                  <ListBox>
+                    {filteredUpazilas.map((upazila) => (
+                      <ListBox.Item
+                        key={upazila.id}
+                        id={upazila.id}
+                        textValue={upazila.name}
+                      >
+                        {upazila.name}
+                      </ListBox.Item>
+                    ))}
+                  </ListBox>
+                </Select.Popover>
+              </Select>
+
+              {/* Password */}
+              <TextField
+                isRequired
+                name="password"
+                type="password"
+                className="col-span-3"
+              >
+                <Label>Password</Label>
+                <Input placeholder="Password" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
+                <FieldError />
+              </TextField>
+
+              {/* Confirm Password */}
+              <TextField
+                isRequired
+                name="confirmPassword"
+                type="password"
+                className="col-span-3"
+              >
+                <Label>Confirm Password</Label>
+                <Input placeholder="Confirm Password" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
+                <FieldError />
+              </TextField>
             </Fieldset.Group>
 
-            <Button type="submit" className={"w-full"}>
-              Signup
+            {/* Submit */}
+            <Button type="submit" className="w-full bg-crimson-dark rounded-lg hover:bg-maroon">
+             Register
             </Button>
+            <div className="flex items-center justify-center gap-1">
+              <p className="text-muted text-sm">Already have an account?</p>
+            <Link href="/signin"><p className="text-sm font-bold text-crimson-dark">Log In</p></Link>
+            </div>
           </Fieldset>
         </Form>
       </Surface>
