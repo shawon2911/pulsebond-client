@@ -24,7 +24,7 @@ export default function Footer() {
     <footer className="bg-ink text-[#CBC1C5]">
 
       {/* main content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
           {/* brand column */}

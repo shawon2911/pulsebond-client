@@ -100,6 +100,9 @@ const Navbar = () => {
             <li>
               <Link href="/search-donors" className={linkClass("/search-donors")} >Search Donors</Link>
             </li>
+            <li>
+              <Link href="#contact" className={linkClass("")} >Contact Us</Link>
+            </li>
           </ul>
           {/* {!user && (
             <div className="hidden items-center gap-4 md:flex">
