@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,12 +21,12 @@ const Navbar = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  //   const { data: session } = authClient.useSession();
-  //   const user = session?.user;
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
-  //   const handleSignOut = async () => {
-  //     await authClient.signOut();
-  //   };
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  };
 
   //   const pathName = usePathname();
   //   // console.log(pathName)
@@ -93,34 +94,47 @@ const Navbar = () => {
           </div>
           <ul className="hidden items-center gap-4 md:flex text-ink font-medium">
             <li>
-              <Link href="/donation-requests" className={linkClass("/donation-requests")} aria-current="page">
+              <Link
+                href="/donation-requests"
+                className={linkClass("/donation-requests")}
+                aria-current="page"
+              >
                 Donation Requests
               </Link>
             </li>
             <li>
-              <Link href="/search-donors" className={linkClass("/search-donors")} >Search Donors</Link>
+              <Link
+                href="/search-donors"
+                className={linkClass("/search-donors")}
+              >
+                Search Donors
+              </Link>
             </li>
             <li>
-              <Link href="#contact" className={linkClass("")} >Contact Us</Link>
+              <Link href="#contact" className={linkClass("")}>
+                Contact Us
+              </Link>
             </li>
           </ul>
-          {/* {!user && (
+          {!user && (
             <div className="hidden items-center gap-4 md:flex">
-              <Link href="/signin">Login</Link>
-              <Link href="/signup">
-                <Button>Sign Up</Button>
+              <Link
+                href="/signin"
+                className="bg-border py-1 px-3 rounded-md text-sm"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className="bg-crimson-dark  py-1 px-3 rounded-md text-sm text-white hover:bg-maroon"
+              >
+                Register
               </Link>
             </div>
-          )} */}
-          <div className="hidden items-center gap-4 md:flex">
-            <Link href="/signin" className="bg-border py-1 px-3 rounded-md text-sm">Login</Link>
-            <Link href="/signup" className="bg-crimson-dark  py-1 px-3 rounded-md text-sm text-white hover:bg-maroon">
-              Register
-            </Link>
-          </div>
+          )}
 
-          {/* {user && (
-            <div className="hidden items-center gap-4 md:flex">
+          {user && (
+            <div className="mr-5 md:mr-0 items-center gap-4 ">
               <Dropdown>
                 <Dropdown.Trigger className="rounded-full">
                   <Avatar size="sm" aria-label="Menu">
@@ -154,17 +168,22 @@ const Navbar = () => {
                   >
                     <Dropdown.Item id="new-file" textValue="New file">
                       <Link
-                        className="flex items-center gap-2"
                         href={`/dashboard/${user?.role}`}
+                        className="flex items-center gap-2 py-2 px-3 rounded-md text-gray-700 hover:bg-red-50 hover:text-red-700 transition"
                       >
                         <MdDashboard />
-                        <Label>Dashboard</Label>
+                        Dashboard
                       </Link>
                     </Dropdown.Item>
 
                     <Dropdown.Item id="copy-link" textValue="Copy link">
-                      <CgProfile />
-                      <Label>Profile</Label>
+                      <Link
+                        href={`/dashboard/${user?.role}-profile`}
+                        className="flex items-center gap-2 py-2 px-3 rounded-md text-gray-700 hover:bg-red-50 hover:text-red-700 transition"
+                      >
+                        <CgProfile />
+                        Profile
+                      </Link>
                     </Dropdown.Item>
 
                     <Dropdown.Item
@@ -172,43 +191,71 @@ const Navbar = () => {
                       textValue="Delete file"
                       variant="danger"
                       onClick={handleSignOut}
+                      className="flex items-center gap-2 py-2 px-3 rounded-md text-red-600 hover:bg-red-50 transition text-left"
                     >
                       <BiLogOut />
-                      <Label>Logout</Label>
+                      Logout
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown.Popover>
               </Dropdown>
             </div>
-          )} */}
+          )}
         </header>
-        {/* {isMenuOpen && (
-          <div className="border-t border-separator md:hidden">
-            <ul className="flex flex-col gap-2 p-4">
-              <li>
-                <Link href="#" className="block py-2">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="block py-2 font-medium text-accent">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="block py-2">
-                  Pricing
-                </Link>
-              </li>
-              <li className="mt-4 flex flex-col gap-2 border-t border-separator pt-4">
-                <Link href="#" className="block py-2">
-                  Login
-                </Link>
-                <Button className="w-full">Sign Up</Button>
-              </li>
-            </ul>
+
+        {/* mobile view for nav items */}
+
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-red-200 bg-white shadow-md">
+            <div className="flex flex-col px-4 py-3 gap-2">
+              <Link
+                href="/donation-requests"
+                className="py-2 px-3 rounded-md text-gray-700 border border-red-400 transition"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Donation Requests
+              </Link>
+
+              <Link
+                href="/search-donors"
+                className="py-2 px-3 rounded-md text-gray-700 border border-red-400 transition"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Search Donors
+              </Link>
+
+              <Link
+                href="#contact"
+                className="py-2 px-3 rounded-md text-gray-700 border border-red-400 transition"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact Us
+              </Link>
+
+              {!user && (
+                <div className="flex flex-col gap-2 pt-2 border-t border-red-100">
+                  <Link
+                    href="/signin"
+                    className="text-center font-bold py-2 rounded-md border border-red-200 text-red-700 hover:bg-red-50 transition"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+
+                  <Link
+                    href="/signup"
+                    className="text-center font-bold py-2 rounded-md bg-red-700 text-white transition"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Register
+                  </Link>
+                </div>
+              )}
+
+              
+            </div>
           </div>
-        )} */}
+        )}
       </nav>
     </div>
   );
