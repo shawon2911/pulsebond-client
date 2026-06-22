@@ -18,21 +18,21 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default function SignInPage() {
-  //   const onSubmit = async (e) => {
-  //     e.preventDefault();
-  //     const formData = new FormData(e.currentTarget);
-  //     const user = Object.fromEntries(formData.entries());
+    const onSubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const user = Object.fromEntries(formData.entries());
 
-  //     await authClient.signIn.email({
-  //       ...user,
-  //       callbackURL: "/",
-  //     });
-  //   };
+      await authClient.signIn.email({
+        ...user,
+        callbackURL: "/",
+      });
+    };
 
   return (
     <div className="bg-[radial-gradient(circle_at_30%_20%,#3a0f1c,#15101A_60%)] min-h-screen flex items-center justify-center">
       <Surface className="w-full max-w-md py-15 px-10 bg-white rounded-2xl">
-        <Form>
+        <Form onSubmit={onSubmit}>
              <Image
               height={40}
               width={40}

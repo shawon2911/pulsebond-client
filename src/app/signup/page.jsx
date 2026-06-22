@@ -1,7 +1,8 @@
 "use client";
-// import { authClient } from "@/lib/auth-client";
+
 import districtsData from "@/data/districts.json";
 import upazilasData from "@/data/upazilas.json";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Description,
@@ -17,31 +18,43 @@ import {
 } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+
 import { useState } from "react";
 
 export default function SignUpPage() {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedUpazila, setSelectedUpazila] = useState("");
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  //   const onSubmit = async (e) => {
-  //     e.preventDefault();
-  //     const formData = new FormData(e.currentTarget);
-  //     const user = Object.fromEntries(formData.entries());
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
 
-  //     await authClient.signUp.email({
-  //       ...user,
-  //       plan: 'free',
-  //     });
+    const { data, error } = await authClient.signUp.email({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      image: user.image || "",
+      bloodGroup: user.bloodGroup,
+      district: selectedDistrict,
+      upazila: selectedUpazila,
+      role: "donor",
+    });
 
-  //     redirect('/')
-  //   };
+    console.log({ data: data, error: error });
+
+    if (error) return;
+    router.push("/");
+  };
 
   return (
     <div className=" bg-[radial-gradient(circle_at_30%_20%,#3a0f1c,#15101A_60%)] min-h-screen flex items-center justify-center">
       <Surface className="w-full max-w-2xl py-15 px-10 bg-white rounded-2xl">
-        <Form>
+        <Form onSubmit={onSubmit}>
           <Image
             height={40}
             width={40}
@@ -63,7 +76,11 @@ export default function SignUpPage() {
               {/* Name */}
               <TextField isRequired name="name" className="col-span-3">
                 <Label>Name</Label>
-                <Input placeholder="John Doe" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
+                <Input
+                  placeholder="John Doe"
+                  variant="secondary"
+                  className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 "
+                />
                 <FieldError />
               </TextField>
 
@@ -75,14 +92,22 @@ export default function SignUpPage() {
                 className="col-span-3"
               >
                 <Label>Email</Label>
-                <Input placeholder="john@example.com" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
+                <Input
+                  placeholder="john@example.com"
+                  variant="secondary"
+                  className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 "
+                />
                 <FieldError />
               </TextField>
 
               {/* Image */}
               <TextField name="image" type="url" className="col-span-6">
                 <Label>Image URL</Label>
-                <Input placeholder="Image URL" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
+                <Input
+                  placeholder="Image URL"
+                  variant="secondary"
+                  className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 "
+                />
                 <FieldError />
               </TextField>
 
@@ -133,7 +158,7 @@ export default function SignUpPage() {
                 className="col-span-2"
                 selectedKey={selectedDistrict}
                 onSelectionChange={(key) => {
-                  setSelectedDistrict(key);
+                  setSelectedDistrict(district?.name || "");
                   setSelectedUpazila("");
 
                   const upazilas = upazilasData.filter(
@@ -170,7 +195,10 @@ export default function SignUpPage() {
               <Select
                 className="col-span-2"
                 selectedKey={selectedUpazila}
-                onSelectionChange={setSelectedUpazila}
+                onSelectionChange={(key) => {
+                  const upazila = filteredUpazilas.find((u) => u.id === key);
+                  setSelectedUpazila(upazila?.name || "");
+                }}
                 isDisabled={!selectedDistrict}
                 placeholder="Select upazila"
               >
@@ -202,9 +230,30 @@ export default function SignUpPage() {
                 name="password"
                 type="password"
                 className="col-span-3"
+                validate={(value) => {
+                  if (!value) return "Password is required";
+
+                  if (value.length < 8) {
+                    return "Password must be at least 8 characters";
+                  }
+                  if (!/[A-Z]/.test(value)) {
+                    return "Password must contain at least one uppercase letter";
+                  }
+                  if (!/[0-9]/.test(value)) {
+                    return "Password must contain at least one number";
+                  }
+
+                  return null;
+                }}
               >
                 <Label>Password</Label>
-                <Input placeholder="Password" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
+                <Input
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  variant="secondary"
+                  className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200"
+                />
                 <FieldError />
               </TextField>
 
@@ -214,20 +263,34 @@ export default function SignUpPage() {
                 name="confirmPassword"
                 type="password"
                 className="col-span-3"
+                validate={(value) => {
+                  if (!value) return "Please confirm your password";
+                  if (value !== password) return "Passwords do not match";
+                  return null;
+                }}
               >
                 <Label>Confirm Password</Label>
-                <Input placeholder="Confirm Password" variant="secondary" className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 " />
+                <Input
+                  placeholder="Confirm Password"
+                  variant="secondary"
+                  className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200"
+                />
                 <FieldError />
               </TextField>
             </Fieldset.Group>
 
             {/* Submit */}
-            <Button type="submit" className="w-full bg-crimson-dark rounded-lg hover:bg-maroon">
-             Register
+            <Button
+              type="submit"
+              className="w-full bg-crimson-dark rounded-lg hover:bg-maroon"
+            >
+              Register
             </Button>
             <div className="flex items-center justify-center gap-1">
               <p className="text-muted text-sm">Already have an account?</p>
-            <Link href="/signin"><p className="text-sm font-bold text-crimson-dark">Log In</p></Link>
+              <Link href="/signin">
+                <p className="text-sm font-bold text-crimson-dark">Log In</p>
+              </Link>
             </div>
           </Fieldset>
         </Form>
