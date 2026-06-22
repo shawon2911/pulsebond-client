@@ -1,5 +1,7 @@
 "use client";
 // import { authClient } from "@/lib/auth-client";
+import districtsData from "@/public/data/districts.json";
+import upazilasData from "@/public/data/upazilas.json";
 import {
   Button,
   Description,
