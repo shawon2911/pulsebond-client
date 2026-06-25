@@ -68,7 +68,7 @@ export default function Banner() {
                 height={500}
                 width={500}
                 loading="eager"
-                src="/banner-image.png"
+                src="/hero-image.png"
                 alt="logo"
               />
             </div>

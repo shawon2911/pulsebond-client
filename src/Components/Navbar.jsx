@@ -28,16 +28,16 @@ const Navbar = () => {
     await authClient.signOut();
   };
 
-  //   const pathName = usePathname();
-  //   // console.log(pathName)
-  //   if(pathName.includes("dashboard")){
-  //     return null;
-  //   }
+    
+    // console.log(pathName)
+    if(pathname.includes("dashboard")){
+      return null;
+    }
 
   return (
     <div>
       <div className="bg-red-900 p-1 text-white">
-        <marquee>
+        <marquee scrollamount="5">
           🩸 Donate Blood, Save Lives | ❤️ Every Drop Counts | 🚨 Emergency
           Blood Requests Available 24/7 | 🤝 Join Our Donor Community Today
         </marquee>
@@ -166,10 +166,10 @@ const Navbar = () => {
                   <Dropdown.Menu
                     onAction={(key) => console.log(`Selected: ${key}`)}
                   >
-                    <Dropdown.Item id="new-file" textValue="New file">
+                    <Dropdown.Item id="new-file" textValue="New file" variant="none">
                       <Link
                         href={`/dashboard/${user?.role}`}
-                        className="flex items-center gap-2 py-2 px-3 rounded-md text-gray-700 hover:bg-red-50 hover:text-red-700 transition"
+                        className="flex items-center gap-2 py-2 px-3 rounded-md text-gray-700  hover:text-red-700 transition"
                       >
                         <MdDashboard />
                         Dashboard
@@ -179,7 +179,7 @@ const Navbar = () => {
                     <Dropdown.Item id="copy-link" textValue="Copy link">
                       <Link
                         href={`/dashboard/${user?.role}-profile`}
-                        className="flex items-center gap-2 py-2 px-3 rounded-md text-gray-700 hover:bg-red-50 hover:text-red-700 transition"
+                        className="flex items-center gap-2 py-2 px-3 rounded-md text-gray-700  hover:text-red-700 transition"
                       >
                         <CgProfile />
                         Profile

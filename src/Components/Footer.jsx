@@ -1,5 +1,7 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const links = {
   Platform: [
@@ -20,6 +22,12 @@ const links = {
 };
 
 export default function Footer() {
+
+  const pathname = usePathname();
+   if(pathname.includes("dashboard")){
+      return null;
+    }
+
   return (
     <footer className="bg-ink text-[#CBC1C5]">
 

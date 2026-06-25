@@ -158,7 +158,8 @@ export default function SignUpPage() {
                 className="col-span-2"
                 selectedKey={selectedDistrict}
                 onSelectionChange={(key) => {
-                  setSelectedDistrict(district?.name || "");
+                  
+                  setSelectedDistrict(key);
                   setSelectedUpazila("");
 
                   const upazilas = upazilasData.filter(
@@ -197,7 +198,7 @@ export default function SignUpPage() {
                 selectedKey={selectedUpazila}
                 onSelectionChange={(key) => {
                   const upazila = filteredUpazilas.find((u) => u.id === key);
-                  setSelectedUpazila(upazila?.name || "");
+                  setSelectedUpazila(key);
                 }}
                 isDisabled={!selectedDistrict}
                 placeholder="Select upazila"
