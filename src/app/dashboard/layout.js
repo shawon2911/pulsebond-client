@@ -7,10 +7,10 @@ const DashboardLayout = ({children}) => {
         <div className="flex h-screen bg-background">
       <DashboardSidebar className="" />
       <div className="w-full flex-1">
-        <div className="border-b p-5">
+        <div className="border-b p-3.5 bg-[#fdefe9]">
           <DashboardNavbar />
         </div>
-        <main className="py-10 px-15">{children}</main>
+        <main className="py-10 px-15 bg-paper min-h-screen">{children}</main>
       </div>
     </div>
     );

@@ -45,7 +45,7 @@ const Navbar = () => {
 
       <nav className="sticky top-0 z-40 w-full border-b border-separator bg-white backdrop-blur-lg">
         <header className="mx-auto flex h-16 max-w-7xl items-center justify-between px-2">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1">
             <button
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -77,7 +77,7 @@ const Navbar = () => {
               </svg>
             </button>
             <Link href={"/"}>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center md:gap-2">
                 <Image
                   height={40}
                   width={40}

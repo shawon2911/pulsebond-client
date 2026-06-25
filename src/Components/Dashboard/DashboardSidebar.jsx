@@ -42,19 +42,7 @@ export default async function DashboardSidebar() {
 
   return (
     <Drawer>
-      {/* Mobile Top Navbar Trigger */}
-      {/* <div className="w-full bg-ink text-white   flex items-center justify-between md:hidden border-b border-white/10">
-        <div className="flex items-center gap-2">
-          <Image height={32} width={32} loading="eager" src="/logo.png" alt="logo" />
-          <span className="font-bold text-xl font-display text-white">PulseBond</span>
-        </div>
-        <Drawer.Trigger>
-          <div size="sm" variant="flat" className="text-white bg-white/10 hover:bg-white/20">
-            <FaBars className="size-4 mr-1" />
-            Menu
-          </div>
-        </Drawer.Trigger>
-      </div> */}
+      
 
       {/* Desktop Sidebar Layout */}
       <div className="hidden md:flex md:flex-col w-64 min-h-screen bg-ink border-r border-white/10 text-white">
@@ -72,7 +60,7 @@ export default async function DashboardSidebar() {
       </div>
 
       {/* Mobile Drawer Structure */}
-      <Drawer.Backdrop>
+      {/* <Drawer.Backdrop>
         <Drawer.Content placement="left">
           <Drawer.Dialog className="bg-ink text-white border-r border-white/10 h-full max-w-[280px] flex flex-col">
             <Drawer.CloseTrigger className="absolute right-4 top-4 text-gray-400 hover:text-white z-50" />
@@ -88,7 +76,7 @@ export default async function DashboardSidebar() {
             </Drawer.Body>
           </Drawer.Dialog>
         </Drawer.Content>
-      </Drawer.Backdrop>
+      </Drawer.Backdrop> */}
     </Drawer>
   );
 }

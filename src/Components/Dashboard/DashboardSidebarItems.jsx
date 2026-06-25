@@ -50,7 +50,7 @@ const DashboardSidebarItems = ({ navItems }) => {
 
       
       <div className="p-4 mb-6">
-        <Button onClick={handleSignOut} className="w-full flex items-center justify-center gap-3 bg-crimson-dark text-white rounded-xl py-5">
+        <Button onClick={handleSignOut} className="w-full flex items-center text-md justify-center gap-3 bg-crimson-dark text-white rounded-xl py-5">
           <BiLogOut className="size-5" />
           Log Out
         </Button>
