@@ -7,12 +7,18 @@ import { FaBars } from "react-icons/fa";
 import { HomeIcon, Plus, UserCheck2Icon } from "lucide-react";
 import { MdManageAccounts, MdRequestPage } from "react-icons/md";
 import { RiProfileFill } from "react-icons/ri";
-import DashboardSidebarItems from "./DashboardSidebarItems";
+import { usePathname } from "next/navigation";
+
 
 const DashboardNavbar = () => {
+  const pathname = usePathname();
+  // console.log(pathname);
+  const currentRoute = pathname.split("/").pop();
+  const pageTitle = currentRoute
+    ? currentRoute.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase()) : "Dashboard";
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  const role = user?.role || "donor";
+  const role = user?.role || "donor"; 
 
   const dashboardItems = {
     donor: [
@@ -137,7 +143,14 @@ const DashboardNavbar = () => {
         </Drawer.Backdrop>
       </Drawer>
 
-      <Dropdown>
+      <div className="hidden w-full md:flex md:justify-between md:px-10">
+        <h1 className="text-xl font-semibold text-gray-800">
+        {pageTitle === "donor" || pageTitle === "admin" || pageTitle === "volunteer" 
+          ? "Dashboard Home" 
+          : pageTitle}
+      </h1>
+        <div className="flex items-center gap-1">
+        <Dropdown>
         <Dropdown.Trigger className="rounded-full">
           <Avatar size="sm" aria-label="Menu">
             <Avatar.Image
@@ -163,6 +176,9 @@ const DashboardNavbar = () => {
           </div>
         </Dropdown.Popover>
       </Dropdown>
+      <p className="text-ink font-medium">{user?.name}</p>
+      </div>
+      </div>
     </div>
   );
 };
