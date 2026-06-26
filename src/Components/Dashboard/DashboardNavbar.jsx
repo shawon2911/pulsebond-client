@@ -129,7 +129,7 @@ const DashboardNavbar = () => {
                       <Link
                         key={item.label}
                         href={item.link}
-                        className={"flex items-center gap-3 rounded-xl  py-5 text-sm font-medium transition-all duration-200 "}
+                        className={"flex  items-center gap-3 rounded-xl text-white  py-5 text-sm font-medium transition-all duration-200 "}
                       >
                         <item.icon className="size-5" />
                         {item.label}

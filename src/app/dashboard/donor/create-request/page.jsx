@@ -16,8 +16,11 @@ import {
   Button,
   Form,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
+import { reqForBlood } from "@/lib/api/action";
 
 const CreateRequestPage = () => {
+  const router = useRouter();
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
@@ -61,15 +64,20 @@ const CreateRequestPage = () => {
     };
 
     try {
-      console.log(
-        "Final Blood Donation Data Package: ",
-        completeRequestPayload,
-      );
-
-      // Apnar framework Server action trigger layout standard process implementation code eikhane call korun:
-      // const res = await createBloodRequest(completeRequestPayload);
-      alert("Blood donation request submitted successfully as 'Pending'!");
-      window.location.reload();
+      console.log("Final Blood Donation Data Package: ", completeRequestPayload,);
+        
+        const result = await reqForBlood(completeRequestPayload);
+      
+         if (result && result.success) {
+        alert("req submitted successfully as 'Pending'!!");
+        
+      } else {
+        console.error("submission failed:", result?.message);
+        alert(result?.message || "Something went wrong!");
+      }
+      
+      
+      router.refresh();
     } catch (error) {
       console.error("Submission layout exception crash tracking: ", error);
     }
@@ -83,10 +91,10 @@ const CreateRequestPage = () => {
     );
 
   return (
-    <Surface className="w-full max-w-3xl py-12 px-10 bg-white rounded-2xl border shadow-red-300 shadow-lg mx-auto my-8">
+    <Surface className="w-full max-w-3xl py-8 px-4 sm:py-12 sm:px-10 bg-white rounded-2xl border shadow-red-300 shadow-lg mx-auto my-8">
       <Form onSubmit={onSubmit}>
         <Fieldset className="w-full">
-          <Fieldset.Legend className="text-center font-bold font-display text-3xl mb-1 text-red-600">
+          <Fieldset.Legend className="text-center font-bold font-display text-2xl sm:text-3xl mb-1 text-red-600">
             Create Blood Request
           </Fieldset.Legend>
           <Description className="text-center text-sm text-gray-500 mb-8">
@@ -94,30 +102,28 @@ const CreateRequestPage = () => {
             dashboard platform.
           </Description>
 
-          <Fieldset.Group className="grid grid-cols-6 gap-5">
+          <Fieldset.Group className="grid grid-cols-2 sm:grid-cols-6 gap-4 sm:gap-5">
             {/* --- SECTION 1: REQUESTER INFO (READ-ONLY) --- */}
-            <TextField isRequired name="requesterName" className="col-span-3" isDisabled={true}>
+            <TextField isRequired name="requesterName" className="col-span-1 sm:col-span-3" isDisabled={true}>
               <Label>Requester Name</Label>
               <Input
-                
                 value={user?.name || ""}
                 className="bg-gray-50 border border-gray-200 text-gray-800 cursor-not-allowed"
               />
             </TextField>
 
-            <TextField isRequired name="requesterEmail" className="col-span-3" isDisabled={true}>
+            <TextField isRequired name="requesterEmail" className="col-span-1 sm:col-span-3" isDisabled={true}>
               <Label>Requester Email</Label>
               <Input
-                
                 value={user?.email || ""}
                 className="bg-gray-50 border border-gray-200 text-gray-800 cursor-not-allowed"
               />
             </TextField>
 
-            <div className="col-span-6 border-b border-dashed border-gray-200 my-2" />
+            <div className="col-span-2 sm:col-span-6 border-b border-dashed border-gray-200 my-2" />
 
             {/* --- SECTION 2: RECIPIENT & LOGISTICAL PACK --- */}
-            <TextField isRequired name="recipientName" className="col-span-4">
+            <TextField isRequired name="recipientName" className="col-span-2 sm:col-span-4">
               <Label>Recipient Name</Label>
               <Input
                 placeholder="Patient's Full Name"
@@ -132,7 +138,7 @@ const CreateRequestPage = () => {
             <Select
               isRequired
               name="bloodGroup"
-              className="col-span-2"
+              className="col-span-2 sm:col-span-2"
               placeholder="Select Group"
               selectedKey={selectedBloodGroup}
               onSelectionChange={(key) => setSelectedBloodGroup(key)}
@@ -155,9 +161,9 @@ const CreateRequestPage = () => {
               </Select.Popover>
             </Select>
 
-            {/* District dropdown tracking matching reference framework rules */}
+            {/* District dropdown */}
             <Select
-              className="col-span-3"
+              className="col-span-2 sm:col-span-3"
               placeholder="Select recipient district"
               selectedKey={selectedDistrict}
               onSelectionChange={(key) => {
@@ -185,9 +191,9 @@ const CreateRequestPage = () => {
               </Select.Popover>
             </Select>
 
-            {/* Upazila dropdown component architecture */}
+            {/* Upazila dropdown */}
             <Select
-              className="col-span-3"
+              className="col-span-2 sm:col-span-3"
               placeholder="Select recipient upazila"
               selectedKey={selectedUpazila}
               isDisabled={!selectedDistrict}
@@ -209,7 +215,7 @@ const CreateRequestPage = () => {
               </Select.Popover>
             </Select>
 
-            <TextField isRequired name="hospitalName" className="col-span-6">
+            <TextField isRequired name="hospitalName" className="col-span-2 sm:col-span-6">
               <Label>Hospital Name</Label>
               <Input
                 placeholder="e.g., Dhaka Medical College Hospital"
@@ -220,7 +226,7 @@ const CreateRequestPage = () => {
               <FieldError />
             </TextField>
 
-            <TextField isRequired name="fullAddress" className="col-span-6">
+            <TextField isRequired name="fullAddress" className="col-span-2 sm:col-span-6">
               <Label>Full Address Line</Label>
               <Input
                 placeholder="Ward No, Area, Landmark details"
@@ -231,12 +237,12 @@ const CreateRequestPage = () => {
               <FieldError />
             </TextField>
 
-            {/* Date Picker Element input */}
+            {/* Date Picker */}
             <TextField
               isRequired
               name="donationDate"
               type="date"
-              className="col-span-3"
+              className="col-span-2 sm:col-span-3"
             >
               <Label>Donation Date</Label>
               <Input
@@ -247,12 +253,12 @@ const CreateRequestPage = () => {
               <FieldError />
             </TextField>
 
-            {/* Time Picker Element input */}
+            {/* Time Picker */}
             <TextField
               isRequired
               name="donationTime"
               type="time"
-              className="col-span-3"
+              className="col-span-2 sm:col-span-3"
             >
               <Label>Donation Time</Label>
               <Input
@@ -263,8 +269,8 @@ const CreateRequestPage = () => {
               <FieldError />
             </TextField>
 
-            {/* Textarea Request Message details box block */}
-            <TextField isRequired name="requestMessage" className="col-span-6">
+            {/* Textarea Request Message */}
+            <TextField isRequired name="requestMessage" className="col-span-2 sm:col-span-6">
               <Label>Request Message</Label>
               <Input
                 placeholder="State the patient condition, medical complications or specific requirements here..."
@@ -276,7 +282,6 @@ const CreateRequestPage = () => {
             </TextField>
           </Fieldset.Group>
 
-          {/* Submit creation trigger transaction key button */}
           <Button
             type="submit"
             className="w-full mt-8 bg-crimson text-white rounded-xl hover:bg-maroon font-bold tracking-wide transition-all shadow-md py-3 text-md"

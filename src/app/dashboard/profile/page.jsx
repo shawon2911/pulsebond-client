@@ -81,13 +81,13 @@ const UserProfilePage = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto  py-10 px-15  bg-white rounded-2xl border shadow-red-300 shadow-lg">
+   <div className="max-w-xl mx-auto py-8 px-4 sm:py-10 sm:px-15 bg-white rounded-2xl border shadow-red-300 shadow-lg">
       <div className="flex justify-between items-center py-5">
-        <h3 className="font-bold text-2xl text-ink">My Information</h3>
+        <h3 className="font-bold text-xl sm:text-2xl text-crimson-dark">My <span className="">Information</span> </h3>
         <Button
           variant="outline"
           onClick={() => setIsEditable(!isEditable)}
-          className=" border border-red-700 text-red-700 px-5 py-1 text-xs rounded"
+          className="border border-red-700 text-red-700 px-5 py-1 text-xs rounded"
         >
           {isEditable ? "Cancel" : "Edit"}
         </Button>
@@ -95,7 +95,6 @@ const UserProfilePage = () => {
 
       {/* image avatar */}
       <div className="flex flex-col items-start mb-4">
-        {/* <Image src={user.image || "/logo.png"} width={80} height={80} alt="Avatar" className="rounded-full" /> */}
         <Avatar size="lg" aria-label="Menu">
           <Avatar.Image
             referrerPolicy="no-referrer"
@@ -109,21 +108,21 @@ const UserProfilePage = () => {
       <form onSubmit={onSubmit} className="space-y-6">
         {/* Name */}
         <TextField isRequired name="name" className="col-span-3">
-          <Label>Name</Label>
+          <Label className="text-crimson">Name</Label>
           <Input
             type="text"
             value={formData.name}
             disabled={!isEditable}
             variant="secondary"
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200 "
+            className="border border-gray-300 focus:border-red-800 focus:ring-2 focus:ring-red-200"
           />
           <FieldError />
         </TextField>
 
         {/* Email */}
         <TextField isRequired name="email" type="email" className="col-span-3">
-          <Label>Email</Label>
+          <Label className="text-crimson">Email</Label>
           <Input
             value={formData.email}
             variant="secondary"
@@ -137,13 +136,12 @@ const UserProfilePage = () => {
         <Select
           isRequired
           name="bloodGroup"
-          // React Aria standard dynamic binding props
           selectedKey={formData.bloodGroup}
           onSelectionChange={(key) =>
             setFormData({ ...formData, bloodGroup: key })
           }
         >
-          <Label>Blood Group</Label>
+          <Label className="text-crimson">Blood Group</Label>
           <Select.Trigger isDisabled={!isEditable}>
             <Select.Value />
             <Select.Indicator />
@@ -161,18 +159,15 @@ const UserProfilePage = () => {
 
         {/* District */}
         <Select
-          // Dynamic props configuration
           selectedKey={selectedDistrict}
           onSelectionChange={(key) => {
             setSelectedDistrict(key);
             setSelectedUpazila("");
-
-            // Filter upazilas based on the newly selected district id
             const upazilas = upazilasData.filter((u) => u.district_id === key);
             setFilteredUpazilas(upazilas);
           }}
         >
-          <Label>Select District</Label>
+          <Label className="text-crimson">Select District</Label>
           <Select.Trigger isDisabled={!isEditable}>
             <Select.Value />
             <Select.Indicator />
@@ -194,15 +189,12 @@ const UserProfilePage = () => {
 
         {/* Upazila */}
         <Select
-          // Dynamic props configuration
           selectedKey={selectedUpazila}
-          // Disabled if not editable OR if no district is selected yet
-
           onSelectionChange={(key) => {
             setSelectedUpazila(key);
           }}
         >
-          <Label>Select Upazila</Label>
+          <Label className="text-crimson">Select Upazila</Label>
           <Select.Trigger isDisabled={!isEditable || !selectedDistrict}>
             <Select.Value />
             <Select.Indicator />
