@@ -26,7 +26,7 @@ const DashboardNavbar = () => {
       {
         icon: RiProfileFill,
         label: "Profile",
-        link: "/dashboard/donor/profile",
+        link: "/dashboard/profile",
       },
       {
         icon: MdRequestPage,
@@ -44,7 +44,7 @@ const DashboardNavbar = () => {
       {
         icon: RiProfileFill,
         label: "Profile",
-        link: "/dashboard/volunteer/profile",
+        link: "/dashboard/profile",
       },
       {
         icon: MdRequestPage,
@@ -57,7 +57,7 @@ const DashboardNavbar = () => {
       {
         icon: RiProfileFill,
         label: "Profile",
-        link: "/dashboard/admin/profile",
+        link: "/dashboard/profile",
       },
       {
         icon: UserCheck2Icon,

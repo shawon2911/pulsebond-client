@@ -45,7 +45,7 @@ export default function SignUpPage() {
       role: "donor",
     });
 
-    console.log({ data: data, error: error });
+    // console.log({ data: data, error: error });
 
     if (error) return;
     router.push("/");

@@ -20,18 +20,18 @@ export default async function DashboardSidebar() {
   const dashboardItems = {
     donor: [
       { icon: "home", label: "Dashboard Home", link: "/dashboard/donor" },
-      { icon: "profile", label: "Profile", link: "/dashboard/donor/profile" },
+      { icon: "profile", label: "Profile", link: "/dashboard/profile" },
       { icon: "request", label: "My Donation Requests", link: "/dashboard/donor/my-donation-requests" },
       { icon: "plus", label: "Create Request", link: "/dashboard/donor/create-request" },
     ],
     volunteer: [
       { icon: "home", label: "Dashboard Home", link: "/dashboard/volunteer" },
-      { icon: "profile", label: "Profile", link: "/dashboard/volunteer/profile" },
+      { icon: "profile", label: "Profile", link: "/dashboard/profile" },
       { icon: "request", label: "All Requests", link: "/dashboard/volunteer/all-requests" },
     ],
     admin: [
       { icon: "home", label: "Dashboard Home", link: "/dashboard/admin" },
-      { icon: "profile", label: "Profile", link: "/dashboard/admin/profile" },
+      { icon: "profile", label: "Profile", link: "/dashboard/profile" },
       { icon: "user", label: "All User", link: "/dashboard/admin/all-user" },
       { icon: "request", label: "All Requests", link: "/dashboard/admin/all-requests" },
       { icon: "management", label: "Content Management", link: "/dashboard/admin/content-management" },
