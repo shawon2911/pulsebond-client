@@ -81,7 +81,7 @@ const UserProfilePage = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto  py-10 px-15  bg-white rounded-2xl  border">
+    <div className="max-w-xl mx-auto  py-10 px-15  bg-white rounded-2xl border shadow-red-300 shadow-lg">
       <div className="flex justify-between items-center py-5">
         <h3 className="font-bold text-2xl text-ink">My Information</h3>
         <Button

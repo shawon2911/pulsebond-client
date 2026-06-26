@@ -45,7 +45,7 @@ export default async function DashboardSidebar() {
       
 
       {/* Desktop Sidebar Layout */}
-      <div className="hidden md:flex md:flex-col w-64 min-h-screen bg-ink border-r border-white/10 text-white">
+      <div className="hidden md:flex md:flex-col w-64 h-screen sticky top-0 bg-ink border-r border-white/10 text-white overflow-hidden">
         <Link href={"/"}>
         <div className="flex items-center gap-3 px-6 py-3.5 border-b border-white/10">
           <Image height={36} width={36} loading="eager" src="/logo.png" alt="logo" />
@@ -59,24 +59,7 @@ export default async function DashboardSidebar() {
        <DashboardSidebarItems navItems={navItems} />
       </div>
 
-      {/* Mobile Drawer Structure */}
-      {/* <Drawer.Backdrop>
-        <Drawer.Content placement="left">
-          <Drawer.Dialog className="bg-ink text-white border-r border-white/10 h-full max-w-[280px] flex flex-col">
-            <Drawer.CloseTrigger className="absolute right-4 top-4 text-gray-400 hover:text-white z-50" />
-            <Drawer.Header className="border-b border-white/10 pb-4 pt-5 px-4 shrink-0">
-              <Drawer.Heading className="text-lg font-bold flex items-center gap-2">
-                <Image height={28} width={28} src="/logo.png" alt="logo" />
-                PulseBond
-              </Drawer.Heading>
-            </Drawer.Header>
-            <Drawer.Body className="p-4">
-              <DashboardSidebarItems navItems={navItems} />
-              
-            </Drawer.Body>
-          </Drawer.Dialog>
-        </Drawer.Content>
-      </Drawer.Backdrop> */}
+      
     </Drawer>
   );
 }

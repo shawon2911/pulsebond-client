@@ -25,7 +25,7 @@ const DashboardSidebarItems = ({ navItems }) => {
     };
 
   return (
-    <div className="flex flex-col flex-1 justify-between min-h-[calc(100vh-140px)] md:min-h-[calc(100vh-100px)]">
+    <div className="flex flex-col flex-1 justify-between h-[calc(100vh-80px)] overflow-y-auto">
       {/* Upper Navigation section */}
       <nav className="flex flex-col gap-1 p-4 mt-4">
         {navItems.map((item) => {

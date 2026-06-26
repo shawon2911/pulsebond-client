@@ -4,13 +4,13 @@ import DashboardSidebar from "@/Components/Dashboard/DashboardSidebar";
 
 const DashboardLayout = ({children}) => {
     return (
-        <div className="flex h-screen bg-background">
-      <DashboardSidebar className="" />
-      <div className="w-full flex-1">
-        <div className="border-b py-4 bg-[#fdefe9]">
+        <div className="flex h-screen w-screen overflow-hidden bg-background">
+      <DashboardSidebar className="shrink-0" />
+      <div className="flex flex-col flex-1 h-screen overflow-hidden">
+        <div className="border-b py-4 bg-[#fdefe9] shrink-0">
           <DashboardNavbar />
         </div>
-        <main className="py-10 px-15 bg-paper min-h-screen">{children}</main>
+        <main className="flex-1 py-10 px-15 bg-paper overflow-y-auto h-full">{children}</main>
       </div>
     </div>
     );
