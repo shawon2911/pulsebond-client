@@ -149,7 +149,7 @@ const DashboardNavbar = () => {
           ? "Dashboard Home" 
           : pageTitle}
       </h1>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
         <Dropdown>
         <Dropdown.Trigger className="rounded-full">
           <Avatar size="sm" aria-label="Menu">
@@ -176,7 +176,7 @@ const DashboardNavbar = () => {
           </div>
         </Dropdown.Popover>
       </Dropdown>
-      <p className="text-ink font-medium">{user?.name}</p>
+      <p className="text-ink font-display font-bold">{user?.name}</p>
       </div>
       </div>
     </div>
