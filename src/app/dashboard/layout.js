@@ -10,7 +10,7 @@ const DashboardLayout = ({children}) => {
         <div className="border-b py-4 bg-[#fdefe9] shrink-0">
           <DashboardNavbar />
         </div>
-        <main className="flex-1 py-10 px-15 bg-paper overflow-y-auto h-full">{children}</main>
+        <main className="flex-1 py-5 px-2 bg-paper overflow-y-auto h-full">{children}</main>
       </div>
     </div>
     );

@@ -43,9 +43,10 @@ export default function SignUpPage() {
       district: selectedDistrict,
       upazila: selectedUpazila,
       role: "donor",
+      status: "active",
     });
 
-    // console.log({ data: data, error: error });
+    console.log({ data: data, error: error });
 
     if (error) return;
     router.push("/");

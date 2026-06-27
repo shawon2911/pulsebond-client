@@ -15,7 +15,7 @@ const DashboardNavbar = () => {
   // console.log(pathname);
   const currentRoute = pathname.split("/").pop();
   const pageTitle = currentRoute
-    ? currentRoute.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase()) : "Dashboard";
+    ? currentRoute.replaceAll("-", " ").replace(/\b\w/g, (l) => l.toUpperCase()) : "Dashboard";
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const role = user?.role || "donor"; 

@@ -81,7 +81,7 @@ const UserProfilePage = () => {
   };
 
   return (
-   <div className="max-w-xl mx-auto py-8 px-4 sm:py-10 sm:px-15 bg-white rounded-2xl border shadow-red-300 shadow-lg">
+   <div className="max-w-xl mx-auto py-8 px-4 md:mt-20 sm:py-10 sm:px-15 bg-white rounded-2xl border shadow-red-300 shadow-lg">
       <div className="flex justify-between items-center py-5">
         <h3 className="font-bold text-xl sm:text-2xl text-crimson-dark">My <span className="">Information</span> </h3>
         <Button

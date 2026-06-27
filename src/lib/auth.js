@@ -17,6 +17,9 @@ export const auth = betterAuth({
       role: {
         defaultValue: "donor",
       },
+      status: {
+        defaultValue: "active",
+      },
       bloodGroup: {
         required: true,
       },

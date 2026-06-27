@@ -18,11 +18,14 @@ import {
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { reqForBlood } from "@/lib/api/action";
+import BlockedScreen from "@/Components/BlockedScreen";
 
 const CreateRequestPage = () => {
   const router = useRouter();
   const { data: session } = authClient.useSession();
   const user = session?.user;
+  const userStatus = user?.status;
+  // console.log(userStatus)
 
   // Dropdown Custom Filter State Matrix
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -46,7 +49,7 @@ const CreateRequestPage = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    
     const nativeFormData = new FormData(e.currentTarget);
     const nativeData = Object.fromEntries(nativeFormData.entries());
 
@@ -64,20 +67,20 @@ const CreateRequestPage = () => {
     };
 
     try {
-      console.log("Final Blood Donation Data Package: ", completeRequestPayload,);
-        
-        const result = await reqForBlood(completeRequestPayload);
+      console.log(
+        "Final Blood Donation Data Package: ",
+        completeRequestPayload,
+      );
+
+      const result = await reqForBlood(completeRequestPayload);
       
-         if (result && result.success) {
+
+      if (result && result.success) {
         alert("req submitted successfully as 'Pending'!!");
-        
       } else {
         console.error("submission failed:", result?.message);
         alert(result?.message || "Something went wrong!");
       }
-      
-      
-      router.refresh();
     } catch (error) {
       console.error("Submission layout exception crash tracking: ", error);
     }
@@ -89,6 +92,10 @@ const CreateRequestPage = () => {
         Loading User Authorization Scope...
       </div>
     );
+
+  if (userStatus === "blocked") {
+    return <BlockedScreen />;
+  }
 
   return (
     <Surface className="w-full max-w-3xl py-8 px-4 sm:py-12 sm:px-10 bg-white rounded-2xl border shadow-red-300 shadow-lg mx-auto my-8">
@@ -104,7 +111,12 @@ const CreateRequestPage = () => {
 
           <Fieldset.Group className="grid grid-cols-2 sm:grid-cols-6 gap-4 sm:gap-5">
             {/* --- SECTION 1: REQUESTER INFO (READ-ONLY) --- */}
-            <TextField isRequired name="requesterName" className="col-span-1 sm:col-span-3" isDisabled={true}>
+            <TextField
+              isRequired
+              name="requesterName"
+              className="col-span-1 sm:col-span-3"
+              isDisabled={true}
+            >
               <Label>Requester Name</Label>
               <Input
                 value={user?.name || ""}
@@ -112,7 +124,12 @@ const CreateRequestPage = () => {
               />
             </TextField>
 
-            <TextField isRequired name="requesterEmail" className="col-span-1 sm:col-span-3" isDisabled={true}>
+            <TextField
+              isRequired
+              name="requesterEmail"
+              className="col-span-1 sm:col-span-3"
+              isDisabled={true}
+            >
               <Label>Requester Email</Label>
               <Input
                 value={user?.email || ""}
@@ -123,8 +140,12 @@ const CreateRequestPage = () => {
             <div className="col-span-2 sm:col-span-6 border-b border-dashed border-gray-200 my-2" />
 
             {/* --- SECTION 2: RECIPIENT & LOGISTICAL PACK --- */}
-            <TextField isRequired name="recipientName" className="col-span-2 sm:col-span-4">
-              <Label>Recipient Name</Label>
+            <TextField
+              isRequired
+              name="recipientName"
+              className="col-span-2 sm:col-span-4"
+            >
+              <Label className="text-crimson">Recipient Name</Label>
               <Input
                 placeholder="Patient's Full Name"
                 value={formData.recipientName}
@@ -143,7 +164,7 @@ const CreateRequestPage = () => {
               selectedKey={selectedBloodGroup}
               onSelectionChange={(key) => setSelectedBloodGroup(key)}
             >
-              <Label>Required Blood Group</Label>
+              <Label className="text-crimson">Required Blood Group</Label>
               <Select.Trigger>
                 <Select.Value />
                 <Select.Indicator />
@@ -175,7 +196,7 @@ const CreateRequestPage = () => {
                 setFilteredUpazilas(upazilas);
               }}
             >
-              <Label>Recipient District</Label>
+              <Label className="text-crimson">Recipient District</Label>
               <Select.Trigger>
                 <Select.Value />
                 <Select.Indicator />
@@ -199,7 +220,7 @@ const CreateRequestPage = () => {
               isDisabled={!selectedDistrict}
               onSelectionChange={(key) => setSelectedUpazila(key)}
             >
-              <Label>Recipient Upazila</Label>
+              <Label className="text-crimson">Recipient Upazila</Label>
               <Select.Trigger>
                 <Select.Value />
                 <Select.Indicator />
@@ -215,8 +236,12 @@ const CreateRequestPage = () => {
               </Select.Popover>
             </Select>
 
-            <TextField isRequired name="hospitalName" className="col-span-2 sm:col-span-6">
-              <Label>Hospital Name</Label>
+            <TextField
+              isRequired
+              name="hospitalName"
+              className="col-span-2 sm:col-span-6"
+            >
+              <Label className="text-crimson">Hospital Name</Label>
               <Input
                 placeholder="e.g., Dhaka Medical College Hospital"
                 value={formData.hospitalName}
@@ -226,8 +251,12 @@ const CreateRequestPage = () => {
               <FieldError />
             </TextField>
 
-            <TextField isRequired name="fullAddress" className="col-span-2 sm:col-span-6">
-              <Label>Full Address Line</Label>
+            <TextField
+              isRequired
+              name="fullAddress"
+              className="col-span-2 sm:col-span-6"
+            >
+              <Label className="text-crimson">Full Address Line</Label>
               <Input
                 placeholder="Ward No, Area, Landmark details"
                 value={formData.fullAddress}
@@ -244,7 +273,7 @@ const CreateRequestPage = () => {
               type="date"
               className="col-span-2 sm:col-span-3"
             >
-              <Label>Donation Date</Label>
+              <Label className="text-crimson">Donation Date</Label>
               <Input
                 value={formData.donationDate}
                 onChange={handleInputChange}
@@ -260,7 +289,7 @@ const CreateRequestPage = () => {
               type="time"
               className="col-span-2 sm:col-span-3"
             >
-              <Label>Donation Time</Label>
+              <Label className="text-crimson">Donation Time</Label>
               <Input
                 value={formData.donationTime}
                 onChange={handleInputChange}
@@ -270,8 +299,12 @@ const CreateRequestPage = () => {
             </TextField>
 
             {/* Textarea Request Message */}
-            <TextField isRequired name="requestMessage" className="col-span-2 sm:col-span-6">
-              <Label>Request Message</Label>
+            <TextField
+              isRequired
+              name="requestMessage"
+              className="col-span-2 sm:col-span-6"
+            >
+              <Label className="text-crimson">Request Message</Label>
               <Input
                 placeholder="State the patient condition, medical complications or specific requirements here..."
                 value={formData.requestMessage}
