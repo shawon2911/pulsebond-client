@@ -2,6 +2,8 @@ import DonateButton from "@/Components/DonateButton";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Link from "next/link";
+import districtsData from "@/data/districts.json";
+import upazilasData from "@/data/upazilas.json";
 
 const ReqDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -14,23 +16,30 @@ const ReqDetailsPage = async ({ params }) => {
   );
   const result = await res.json();
 
-  const reqDetails = result.data;
-  const status = reqDetails.status;
+  const reqDetails = result?.data;
+  const status = reqDetails?.status;
+  const recipientDistrictId = reqDetails?.recipientDistrict;
+  const recipientUpazilaId = reqDetails?.recipientUpazila;
+  // console.log({district: recipientDistrictId, upazila: recipientUpazilaId})
   // console.log(status)
 
+  const districtName = districtsData.find(d => d.id === recipientDistrictId)?.name;
+  const upazilaName = upazilasData.find(u => u.id === recipientUpazilaId)?.name;
+  // console.log({district: districtName, upazila: upazilaName})
+
   const details = [
-    { label: "Recipient Name", value: reqDetails.recipientName },
-    { label: "Blood Group", value: reqDetails.bloodGroup, highlight: true },
-    { label: "Hospital", value: reqDetails.hospitalName },
-    { label: "Full Address", value: reqDetails.fullAddress },
+    { label: "Recipient Name", value: reqDetails?.recipientName },
+    { label: "Blood Group", value: reqDetails?.bloodGroup, highlight: true },
+    { label: "Hospital", value: reqDetails?.hospitalName },
+    { label: "Full Address", value: reqDetails?.fullAddress },
     {
       label: "District / Upazila",
-      value: `${reqDetails.recipientDistrict} / ${reqDetails.recipientUpazila}`,
+      value: `${districtName} / ${upazilaName}`,
     },
 
     {
       label: "Donation Date",
-      value: new Date(reqDetails.donationDate).toLocaleDateString("en-GB", {
+      value: new Date(reqDetails?.donationDate).toLocaleDateString("en-GB", {
         day: "numeric",
         month: "long",
         year: "numeric",
@@ -40,10 +49,10 @@ const ReqDetailsPage = async ({ params }) => {
     {
       label: "Donation Time",
       value: new Date(
-        `1970-01-01T${reqDetails.donationTime}`,
+        `1970-01-01T${reqDetails?.donationTime}`,
       ).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
     },
-    { label: "Requested By", value: reqDetails.requesterName },
+    { label: "Requested By", value: reqDetails?.requesterName },
   ];
 
   const session = await auth.api.getSession({
@@ -88,14 +97,14 @@ const ReqDetailsPage = async ({ params }) => {
                 Blood needed
               </span>
               <h1 className="font-display text-2xl sm:text-3xl font-semibold text-ink mt-2 leading-snug">
-                {reqDetails.recipientName}
+                {reqDetails?.recipientName}
               </h1>
               <div className="flex items-center gap-3 mt-3 flex-wrap">
                 <span className="bg-crimson text-white text-sm font-bold px-3 py-1 rounded-lg">
-                  {reqDetails.bloodGroup}
+                  {reqDetails?.bloodGroup}
                 </span>
                 <span className="bg-[#FCEFD8] text-[#9A6B14] text-xs font-bold px-3 py-1 rounded-full capitalize">
-                  {reqDetails.status}
+                  {reqDetails?.status}
                 </span>
               </div>
 
@@ -125,7 +134,7 @@ const ReqDetailsPage = async ({ params }) => {
                 Request message
               </p>
               <p className="text-sm text-ink leading-relaxed">
-                {reqDetails.requestMessage}
+                {reqDetails?.requestMessage}
               </p>
             </div>
           </div>
@@ -150,13 +159,13 @@ const ReqDetailsPage = async ({ params }) => {
                   Location
                 </p>
                 <p className="text-sm font-semibold text-ink">
-                  {reqDetails.hospitalName}
+                  {reqDetails?.hospitalName}
                 </p>
                 <p className="text-xs text-muted mt-1">
-                  {reqDetails.fullAddress}
+                  {reqDetails?.fullAddress}
                 </p>
                 <p className="text-xs text-muted">
-                  {reqDetails.recipientDistrict}, {reqDetails.recipientUpazila}
+                  {districtName}, {upazilaName}
                 </p>
               </div>
             </div>

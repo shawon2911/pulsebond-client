@@ -67,14 +67,15 @@ const CreateRequestPage = () => {
     };
 
     try {
-      console.log(
-        "Final Blood Donation Data Package: ",
-        completeRequestPayload,
-      );
+      // console.log(
+      //   "Final Blood Donation Data Package: ",
+      //   completeRequestPayload,
+      // );
 
       const {data: token} = await authClient.token()
+      // console.log("hello token", token)
 
-      const result = await reqForBlood(completeRequestPayload, token?.token);
+      const result = await reqForBlood(completeRequestPayload, token);
       
 
       if (result && result.success) {

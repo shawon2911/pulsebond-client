@@ -66,7 +66,8 @@ const UserProfilePage = () => {
 
     try {
       const {data: token} = await authClient.token()
-      const result = await updateUserData(allData, token?.token);
+      // console.log("hello", token)
+      const result = await updateUserData(allData, token);
 
       if (result && result.success) {
         alert("Profile updated successfully!");
