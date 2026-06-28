@@ -29,6 +29,7 @@ export default function SignInPage() {
       password: user.password,
     });
     console.log({ data, error });
+    console.log("submitting", user)
     if (error) return;
     router.push("/");
   };
