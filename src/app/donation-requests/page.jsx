@@ -13,7 +13,7 @@ const AllDonationReqPage = async () => {
   const email = user?.email;
 
   const currentFilterStatus = "all";
-  let url = `${process.env.NEXT_PUBLIC_SERVER_URL}/bloodReq`;
+  let url = `${process.env.SERVER_URL}/bloodReq`;
   if (currentFilterStatus && currentFilterStatus !== "all") {
     url += `&status=${currentFilterStatus}`;
   }

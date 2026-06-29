@@ -9,7 +9,7 @@ const ReqDetailsPage = async ({ params }) => {
   const { id } = await params;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/bloodReq/${id}`,
+    `${process.env.SERVER_URL}/bloodReq/${id}`,
     {
       cache: "no-store",
     },

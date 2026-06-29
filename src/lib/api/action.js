@@ -1,5 +1,5 @@
 "use server";
-const baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
+const baseURL = process.env.SERVER_URL;
 
 export const updateUserData = async (data, token) => {
   try {
