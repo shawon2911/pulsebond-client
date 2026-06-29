@@ -80,6 +80,21 @@ export const deleteReq = async(id, token) => {
   
 }
 
+export const doneButtonAction = async(id, token) =>{
+  const res = await fetch(`${baseURL}/bloodReq/${id}`,{
+    method: "PATCH",
+    headers: {
+      "Content-Type" : "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body:JSON.stringify({status: "Done"})
+  
+  });
+  const result = await res.json();
+  return result;
+  
+}
+
 
 // bloodGroup: "AB+";
 // createdAt: "2026-06-28T19:39:00.373Z";
