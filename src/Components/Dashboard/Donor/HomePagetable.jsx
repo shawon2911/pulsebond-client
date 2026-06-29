@@ -1,6 +1,7 @@
 import { Button, Chip, Table } from "@heroui/react";
 import Link from "next/link";
 import EditReqModal from "./EditReqModal";
+import DeleteButton from "./DeleteButton";
 
 
 const HomePagetable = ({ data}) => {
@@ -125,8 +126,8 @@ const HomePagetable = ({ data}) => {
                         req.status === "pending" ?
                             <div className="flex items-center gap-2">
                               <EditReqModal data={req} />
+                                <DeleteButton id={req._id} />
                                 
-                                <Button variant="none" className={'border border-crimson text-crimson hover:bg-crimson hover:text-white rounded-xl'}>Delete</Button>
                             </div> : req.status === "inprogress" ?
                                 <div className="flex items-center gap-2">
                                     <Button variant="none" className={'border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl'}>Done</Button>

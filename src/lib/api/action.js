@@ -65,6 +65,22 @@ export const editReqInfo = async(data, id, token) => {
 }
 
 
+
+export const deleteReq = async(id, token) => {
+  const res = await fetch(`${baseURL}/bloodReq/${id}`,{
+    method: 'DELETE',
+    headers: {
+      "Content-Type" : "application/json",
+      authorization: `Bearer ${token}`,
+    }
+  
+  });
+  const result = await res.json();
+  return result;
+  
+}
+
+
 // bloodGroup: "AB+";
 // createdAt: "2026-06-28T19:39:00.373Z";
 // donationDate: "2026-07-03";

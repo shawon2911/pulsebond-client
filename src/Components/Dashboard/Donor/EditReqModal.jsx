@@ -83,11 +83,11 @@ const EditReqModal = ({ data }) => {
             <Modal.Dialog className="sm:max-w-md md:max-w-lg">
               <Modal.CloseTrigger />
               <Modal.Header>
-                <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                  <Edit2Icon />
+                <Modal.Icon className="bg-danger-soft text-danger-soft-foreground">
+                  <Edit2Icon  />
                 </Modal.Icon>
 
-                <Modal.Heading>Edit Request</Modal.Heading>
+                <Modal.Heading className="">Edit Request</Modal.Heading>
                 <p className="mt-1.5 text-sm leading-5 text-muted">
                   Update the details of your blood donation request below.
                 </p>
@@ -324,10 +324,10 @@ const EditReqModal = ({ data }) => {
                       </TextField>
                     </Fieldset.Group>
                     <Modal.Footer>
-                      <Button slot="close" variant="secondary">
+                      <Button slot="close" variant="none" className={"border hover:bg-gray-600 hover:text-white"}>
                         Cancel
                       </Button>
-                      <Button slot="close" type="submit">
+                      <Button slot="close" type="submit" className={'bg-crimson text-white hover:bg-crimson-dark'}>
                         Save Changes
                       </Button>
                     </Modal.Footer>
