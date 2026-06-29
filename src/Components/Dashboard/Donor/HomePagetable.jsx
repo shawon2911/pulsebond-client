@@ -124,7 +124,7 @@ const HomePagetable = ({ data}) => {
                       {
                         req.status === "pending" ?
                             <div className="flex items-center gap-2">
-                              <EditReqModal />
+                              <EditReqModal data={req} />
                                 
                                 <Button variant="none" className={'border border-crimson text-crimson hover:bg-crimson hover:text-white rounded-xl'}>Delete</Button>
                             </div> : req.status === "inprogress" ?

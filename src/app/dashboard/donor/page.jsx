@@ -37,7 +37,7 @@ useEffect(() => {
   }
 //  console.log("result", donations);
 const threeData = (donations || []).slice(0, 3);
-  console.log("Sliced Data:", threeData);
+  // console.log("Sliced Data:", threeData);
 
   return (
     <div>
