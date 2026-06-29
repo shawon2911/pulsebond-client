@@ -1,6 +1,7 @@
 "use client";
 import HomePagetable from "@/Components/Dashboard/Donor/HomePagetable";
 import WelcomeMessage from "@/Components/Dashboard/WelcomeMessage";
+import { userDonationReq } from "@/lib/api/action";
 import { authClient } from "@/lib/auth-client";
 import { Chip, Table } from "@heroui/react";
 import { useEffect, useState } from "react";
@@ -10,36 +11,33 @@ const DonorDashboardHomePage = () => {
   const user = session?.user;
   const email = user?.email;
 
-  const [donations, setDonations] = useState(null);
+  const [donations, setDonations] = useState([]);
+  const [status, setStatus] = useState("all");
 
 useEffect(() => {
   if (!email) return;
 
   const fetchDonations = async () => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/bloodReq?email=${email}`,
-        {
-          cache: "no-store",
-        }
-      );
-
-      const data = await res.json();
-      setDonations(data);
+      const result = await userDonationReq(email, status );
+      // console.log("result", result);
+      setDonations(result);
+     
     } catch (error) {
       console.log(error);
     }
   };
 
   fetchDonations();
-}, [email]);
+}, [email, status]);
+ 
 
-const allData = donations?.data || [];
-// console.log(allData)
-const threeData = allData.slice(0,3);
-console.log(threeData)
-
-// console.log(allData);
+  if (!user) {
+    return <div className="p-6 text-center text-red-500">Unauthorized! Please login.</div>;
+  }
+//  console.log("result", donations);
+const threeData = (donations || []).slice(0, 3);
+  console.log("Sliced Data:", threeData);
 
   return (
     <div>
@@ -47,7 +45,7 @@ console.log(threeData)
       <WelcomeMessage userName={user?.name} />
       <div className="md:mx-5"> 
         <h2 className="text-ink text-xl font-bold md:ml-3 mb-2">Recent Donation Requests</h2>
-        <HomePagetable threeData={threeData} />
+        <HomePagetable data={threeData} />
       </div>
     </div>
   );

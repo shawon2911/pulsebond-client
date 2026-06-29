@@ -38,3 +38,16 @@ export const reqForBlood = async (data, token) => {
     return { success: false, message: "Server connection failed" };
   }
 };
+
+
+
+export const userDonationReq = async(email, status) => {
+    let url = `${baseURL}/bloodReq?email=${email}`
+    if(status && status !== "all"){
+      url += `&status=${status}`
+    }
+    const res = await fetch(url);
+    const result = await res.json();
+    const allData = result?.data;
+    return allData;
+}

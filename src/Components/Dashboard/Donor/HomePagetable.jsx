@@ -1,10 +1,11 @@
 import { Button, Chip, Table } from "@heroui/react";
 import Link from "next/link";
+import EditReqModal from "./EditReqModal";
 
 
-const HomePagetable = ({ threeData }) => {
+const HomePagetable = ({ data}) => {
   return (
-    <div>
+    <div className="w-full overflow-x-auto rounded-xl">
       <Table className="bg-paper">
         <Table.ResizableContainer>
           <Table.Content
@@ -68,10 +69,11 @@ const HomePagetable = ({ threeData }) => {
                 <Table.ColumnResizer />
               </Table.Column>
               <Table.Column
-                defaultWidth="1fr"
+                defaultWidth="2fr"
                 id="actions"
-                minWidth={180}
-                className="uppercase"
+                minWidth={280}
+                className="uppercase "
+                
               >
                 Actions
                 <Table.ColumnResizer />
@@ -79,7 +81,7 @@ const HomePagetable = ({ threeData }) => {
             </Table.Header>
 
             <Table.Body>
-              {threeData.map((req) => (
+              {data.map((req) => (
                 <Table.Row key={req._id}>
                   <Table.Cell>{req.recipientName}</Table.Cell>
                   <Table.Cell>{req.fullAddress}</Table.Cell>
@@ -109,12 +111,12 @@ const HomePagetable = ({ threeData }) => {
                     </Chip>
                   </Table.Cell>
                   <Table.Cell>{req.donorName || "—"}</Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell >
                     <div className="flex items-center gap-2">
-                       <Button variant="none" className={'border rounded-xl'}>
+                       <Button variant="none" className={'border rounded-xl hover:bg-ink hover:text-white'}>
                         <Link
                         href={`/donation-requests/${req._id}`}
-                        className="text-xs text-crimson hover:underline"
+                        className="text-xs   "
                       >
                         View
                       </Link>
@@ -122,12 +124,13 @@ const HomePagetable = ({ threeData }) => {
                       {
                         req.status === "pending" ?
                             <div className="flex items-center gap-2">
-                                <Button variant="none" className={'border rounded-xl'}>Edit</Button>
-                                <Button variant="none" className={'border border-crimson text-crimson rounded-xl'}>Delete</Button>
+                              <EditReqModal />
+                                
+                                <Button variant="none" className={'border border-crimson text-crimson hover:bg-crimson hover:text-white rounded-xl'}>Delete</Button>
                             </div> : req.status === "inprogress" ?
                                 <div className="flex items-center gap-2">
-                                    <Button variant="none" className={'border border-green-600 text-green-600 rounded-xl'}>Done</Button>
-                                    <Button variant="none" className={'border  border-crimson text-crimson rounded-xl'}>Cancel</Button>
+                                    <Button variant="none" className={'border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl'}>Done</Button>
+                                    <Button variant="none" className={'border  border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white rounded-xl'}>Cancel</Button>
                                 </div> : <></>
                       }
                     </div>
