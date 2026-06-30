@@ -6,7 +6,7 @@ export default function DonateButton({ donorName, donorEmail, requestId, status 
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(status === "inprogress");
+  const [disabled, setDisabled] = useState(status === "inprogress" || status === "Done");
 // console.log(status)
  
   

@@ -9,7 +9,7 @@ const DeleteButton = ({id}) => {
     const handleDelete = async(id) =>{
         const { data: token } = await authClient.token();
         // console.log("my token",  token);
-        const result = await deleteReq(id, token)
+        const result = await deleteReq(id, token?.token)
     }
     return (
     <AlertDialog>

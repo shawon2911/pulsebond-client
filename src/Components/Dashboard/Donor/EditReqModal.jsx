@@ -63,7 +63,7 @@ const EditReqModal = ({ data }) => {
      const {data: token} = await authClient.token()
           // console.log("hello token", token)
 
-    const result = await editReqInfo(updatedData, id, token)
+    const result = await editReqInfo(updatedData, id, token?.token)
 
     console.log("updatedData:", updatedData);
   };

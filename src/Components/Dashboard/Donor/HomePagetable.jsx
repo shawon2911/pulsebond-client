@@ -16,8 +16,8 @@ const HomePagetable = ({ data}) => {
   const handleDoneButton = async(id) => {
      try {
       const {data: token} = await authClient.token()
-              console.log("hello token", token?.token)
-    // const result = await doneButtonAction(id, token?.token)
+              // console.log("hello token", token?.token)
+    const result = await doneButtonAction(id, token?.token)
     // console.log("button clicked")
     // console.log("id", id)
     if (result.success) {

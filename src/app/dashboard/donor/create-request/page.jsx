@@ -75,7 +75,7 @@ const CreateRequestPage = () => {
       const {data: token} = await authClient.token()
       // console.log("hello token", token)
 
-      const result = await reqForBlood(completeRequestPayload, token);
+      const result = await reqForBlood(completeRequestPayload, token?.token);
       
 
       if (result && result.success) {
