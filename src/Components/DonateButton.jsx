@@ -1,4 +1,5 @@
 "use client";
+import { donateBtn } from "@/lib/api/action";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 
@@ -8,25 +9,34 @@ export default function DonateButton({ donorName, donorEmail, requestId, status 
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(status === "inprogress" || status === "Done");
 // console.log(status)
+  // const { data: session } = authClient.useSession();
+  // const user = session?.user;
+  // const donorName = user?.name;
+  // const donorEmail = user?.email;
  
   
 
   const handleConfirm = async () => {
-    const {data: token} = await authClient.token()
+    try {
+      const {data: token} = await authClient.token()
     // console.log("token" , token.token)
     setLoading(true);
-    await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bloodReq/${requestId}`, {
-      method: "PATCH",
-      headers: {
-         "Content-Type": "application/json",
-         authorization : `Bearer ${token?.token}`
-         },
-      body: JSON.stringify({ status: "inprogress", donorName, donorEmail }),
-    });
+    const result = await donateBtn(requestId, donorName, donorEmail, token?.token)
     setLoading(false);
-    setConfirmed(true);
-    window.alert("donation in progress");
-  };
+    if (result.success) {
+      setConfirmed(true);
+      window.alert("Donation is now in progress!");
+    } else {
+      window.alert("Backend update failed. Please check backend console.");
+    }
+    } catch (error) {
+      setLoading(false);
+    console.error("Fetch error:", error);
+    window.alert("An error occurred while connecting to the server.");
+  }
+    }
+    
+  
 
    
 

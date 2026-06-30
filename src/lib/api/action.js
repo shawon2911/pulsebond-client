@@ -96,6 +96,34 @@ export const doneButtonAction = async(id, token) =>{
 }
 
 
+export const donateBtn = async(id, token, donorName, donorEmail ) =>{
+  const res = await fetch(`${baseURL}/bloodReq/${id}`, {
+      method: "PATCH",
+      headers: {
+         "Content-Type": "application/json",
+         authorization : `Bearer ${token}`
+         },
+      body: JSON.stringify({ status: "inprogress", donorName, donorEmail }),
+    });
+    const result = await res.json();
+    return result;
+}
+
+
+export const cancelBtn = async(id, token) =>{
+  const res = await fetch(`${baseURL}/bloodReq/${id}`, {
+      method: "PATCH",
+      headers: {
+         "Content-Type": "application/json",
+         authorization : `Bearer ${token}`
+         },
+      body: JSON.stringify({ status: "pending", donorName:"", donorEmail:"" }),
+    });
+    const result = await res.json();
+    return result;
+}
+
+
 // bloodGroup: "AB+";
 // createdAt: "2026-06-28T19:39:00.373Z";
 // donationDate: "2026-07-03";

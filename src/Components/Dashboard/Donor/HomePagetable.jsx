@@ -1,40 +1,63 @@
-"use client"
+"use client";
 import { Button, Chip, Table } from "@heroui/react";
 import Link from "next/link";
 import EditReqModal from "./EditReqModal";
 import DeleteButton from "./DeleteButton";
-import { doneButtonAction } from "@/lib/api/action";
+import { cancelBtn, doneButtonAction } from "@/lib/api/action";
 import { authClient } from "@/lib/auth-client";
-import {  useState } from "react";
+import { useState } from "react";
 
+const HomePagetable = ({ data }) => {
+  const [request, setRequest] = useState(data || []);
 
-const HomePagetable = ({ data}) => {
-  const [request, setRequest] = useState(data || [])
-  
-
-
-  const handleDoneButton = async(id) => {
-     try {
-      const {data: token} = await authClient.token()
-              // console.log("hello token", token?.token)
-    const result = await doneButtonAction(id, token?.token)
-    // console.log("button clicked")
-    // console.log("id", id)
-    if (result.success) {
-      alert("Request marked as Done successfully!");
-    }
-    setRequest((prevReq) =>{
-      prevReq.map(req =>{
-        req._id === id ? {...req, status: "Done"} : req
-      })
-    })
-
-     
-     } catch (error) {
+  const handleDoneButton = async (id) => {
+    try {
+      const { data: token } = await authClient.token();
+      // console.log("hello token", token?.token)
+      const result = await doneButtonAction(id, token?.token);
+      // console.log("button clicked")
+      // console.log("id", id)
+      if (result.success) {
+        alert("Request marked as Done successfully!");
+      }
+      setRequests((prevRequests) =>
+        prevRequests.map((req) =>
+          req._id === id ? { ...req, status: "Done" } : req,
+        ),
+      );
+    } catch (error) {
       console.error("Error updating status:", error);
-    alert("An error occurred. Please try again.");
-     }
-}
+      alert("An error occurred. Please try again.");
+    }
+  };
+
+  const handleCancelButton = async (id) => {
+    try {
+      const { data: token } = await authClient.token();
+
+      const result = await cancelBtn(id, token?.token);
+
+      if (result.success) {
+        alert("Request marked as pending again ");
+      
+      if (typeof setRequests === "function") {
+        setRequests((prevRequests) =>
+          prevRequests.map((req) =>
+            req._id === id
+              ? { ...req, status: "pending", donorName: "", donorEmail: "" }
+              : req,
+          ),
+        );
+      } 
+   }
+   else {
+        window.alert("Failed to cancel donation.");
+      } 
+  } catch (error) {
+      console.error("Error updating status:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <div className="w-full overflow-x-auto rounded-xl">
@@ -105,7 +128,6 @@ const HomePagetable = ({ data}) => {
                 id="actions"
                 minWidth={280}
                 className="uppercase "
-                
               >
                 Actions
                 <Table.ColumnResizer />
@@ -143,28 +165,50 @@ const HomePagetable = ({ data}) => {
                     </Chip>
                   </Table.Cell>
                   <Table.Cell>{req.donorName || "—"}</Table.Cell>
-                  <Table.Cell >
+                  <Table.Cell>
                     <div className="flex items-center gap-2">
-                       <Button variant="none" className={'border rounded-xl hover:bg-ink hover:text-white'}>
-                        <Link
-                        href={`/donation-requests/${req._id}`}
-                        className="text-xs   "
+                      <Button
+                        variant="none"
+                        className={
+                          "border rounded-xl hover:bg-ink hover:text-white"
+                        }
                       >
-                        View
-                      </Link>
-                       </Button>
-                      {
-                        req.status === "pending" ?
-                            <div className="flex items-center gap-2">
-                              <EditReqModal data={req} />
-                                <DeleteButton id={req._id} />
-                                
-                            </div> : req.status === "inprogress" ?
-                                <div className="flex items-center gap-2">
-                                    <Button onClick={()=>handleDoneButton(req._id)} variant="none" className={'border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl'}>Done</Button>
-                                    <Button variant="none" className={'border  border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white rounded-xl'}>Cancel</Button>
-                                </div> : <></>
-                      }
+                        <Link
+                          href={`/donation-requests/${req._id}`}
+                          className="text-xs   "
+                        >
+                          View
+                        </Link>
+                      </Button>
+                      {req.status === "pending" ? (
+                        <div className="flex items-center gap-2">
+                          <EditReqModal data={req} />
+                          <DeleteButton id={req._id} />
+                        </div>
+                      ) : req.status === "inprogress" ? (
+                        <div className="flex items-center gap-2">
+                          <Button
+                            onClick={() => handleDoneButton(req._id)}
+                            variant="none"
+                            className={
+                              "border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl"
+                            }
+                          >
+                            Done
+                          </Button>
+                          <Button
+                            onClick={() => handleCancelButton(req._id)}
+                            variant="none"
+                            className={
+                              "border  border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white rounded-xl"
+                            }
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </Table.Cell>
                 </Table.Row>
