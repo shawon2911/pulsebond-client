@@ -28,8 +28,8 @@ export default function WelcomeMessage({ userName }) {
              👋
           </h1>
           <p className="text-rose-50 text-sm md:text-base font-light max-w-xl leading-relaxed">
-            "Your single drop of blood can bring a smile to a face and save a
-            precious life." Thank you for being a hero! ❤️
+            Your single drop of blood can bring a smile to a face and save a
+            precious life. Thank you for being a hero! ❤️
           </p>
         </div>
 
