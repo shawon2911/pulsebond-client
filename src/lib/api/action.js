@@ -1,5 +1,5 @@
 "use server";
-const baseURL = process.env.SERVER_URL;
+const baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export const updateUserData = async (data, token) => {
   try {
@@ -50,79 +50,69 @@ export const userDonationReq = async (email, status) => {
   return allData;
 };
 
-
-export const editReqInfo = async(data, id, token) => {
- const res = await fetch(`${baseURL}/dashboard/bloodReq/edit/${id}`, {
-      method : "PATCH",
-      headers : {
-        "Content-Type" : "application/json",
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
- });
-  const responsedData = await res.json();
-  return responsedData;
-}
-
-
-
-export const deleteReq = async(id, token) => {
-  const res = await fetch(`${baseURL}/bloodReq/${id}`,{
-    method: 'DELETE',
-    headers: {
-      "Content-Type" : "application/json",
-      authorization: `Bearer ${token}`,
-    }
-  
-  });
-  const result = await res.json();
-  return result;
-  
-}
-
-export const doneButtonAction = async(id, token) =>{
-  const res = await fetch(`${baseURL}/bloodReq/${id}`,{
+export const editReqInfo = async (data, id, token) => {
+  const res = await fetch(`${baseURL}/dashboard/bloodReq/edit/${id}`, {
     method: "PATCH",
     headers: {
-      "Content-Type" : "application/json",
+      "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    body:JSON.stringify({status: "Done"})
-  
+    body: JSON.stringify(data),
+  });
+  const responsedData = await res.json();
+  return responsedData;
+};
+
+export const deleteReq = async (id, token) => {
+  const res = await fetch(`${baseURL}/bloodReq/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
   });
   const result = await res.json();
   return result;
-  
-}
+};
 
-
-export const donateBtn = async(id, token, donorName, donorEmail ) =>{
+export const doneButtonAction = async (id, token) => {
   const res = await fetch(`${baseURL}/bloodReq/${id}`, {
-      method: "PATCH",
-      headers: {
-         "Content-Type": "application/json",
-         authorization : `Bearer ${token}`
-         },
-      body: JSON.stringify({ status: "inprogress", donorName, donorEmail }),
-    });
-    const result = await res.json();
-    return result;
-}
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status: "Done" }),
+  });
+  const result = await res.json();
+  return result;
+};
 
-
-export const cancelBtn = async(id, token) =>{
+export const donateBtn = async (id, token, donorName, donorEmail) => {
   const res = await fetch(`${baseURL}/bloodReq/${id}`, {
-      method: "PATCH",
-      headers: {
-         "Content-Type": "application/json",
-         authorization : `Bearer ${token}`
-         },
-      body: JSON.stringify({ status: "pending", donorName:"", donorEmail:"" }),
-    });
-    const result = await res.json();
-    return result;
-}
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status: "inprogress", donorName, donorEmail }),
+  });
+  const result = await res.json();
+  return result;
+};
 
+export const cancelBtn = async (id, token) => {
+  const res = await fetch(`${baseURL}/bloodReq/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status: "pending", donorName: "", donorEmail: "" }),
+  });
+  const result = await res.json();
+  return result;
+};
 
 // bloodGroup: "AB+";
 // createdAt: "2026-06-28T19:39:00.373Z";

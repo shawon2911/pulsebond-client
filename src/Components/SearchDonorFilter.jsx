@@ -3,6 +3,7 @@
 import { useState } from "react";
 import districtsData from "@/data/districts.json";
 import upazilasData from "@/data/upazilas.json";
+import SearchDonorTable from "./SearchDonorTable";
 
 const SearchDonorFilter = () => {
   const [isOpenBloodBox, setIsOpenBloodBox] = useState(false);
@@ -18,6 +19,8 @@ const SearchDonorFilter = () => {
     "Select Donor upazila",
   );
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+  const [donors, setDonors] = useState([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const BloodOptions = [
     { value: "A+", label: "A+" },
@@ -30,17 +33,37 @@ const SearchDonorFilter = () => {
     { value: "O-", label: "O-" },
   ];
 
-  const handleSearch = () => {
-    // TODO: call your filter/search logic here
-    console.log({ selectedBloodGroup, selectedDistrict, selectedUpazila });
+  const handleSearch = async () => {
+    try {
+      console.log({ selectedBloodGroup, selectedDistrict, selectedUpazila });
+      let url = `${process.env.NEXT_PUBLIC_SERVER_URL}/searchDonor?bloodGroup=${encodeURIComponent(selectedBloodGroup)}`;
+      if (selectedDistrict) {
+        url += `&district=${encodeURIComponent(selectedDistrict)}`;
+      }
+      if (selectedUpazila) {
+        url += `&upazila=${encodeURIComponent(selectedUpazila)}`;
+      }
+
+      const res = await fetch(url);
+      const result = await res.json();
+      // console.log(result);
+      const finalResult = result?.data;
+      setDonors(finalResult);
+      setHasSearched(true);
+    } catch (error) {
+      console.error("Submission layout exception crash tracking: ", error);
+    }
   };
+  // console.log(donors)
 
   return (
-    <div className="bg-white max-w-7xl mx-auto rounded-2xl p-4 shadow-md border">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-10 items-end">
+    <div className=" max-w-7xl mx-auto ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-10 bg-white rounded-2xl py-8  px-6  shadow-md border items-end">
         {/* Blood Group */}
         <div className="relative inline-block text-left w-full lg:col-span-3">
-          <label className="text-ink block mb-1">Blood Group</label>
+          <label className="text-ink block font-semibold mb-1">
+            Blood Group
+          </label>
           <button
             type="button"
             onClick={() => setIsOpenBloodBox(!isOpenBloodBox)}
@@ -70,7 +93,9 @@ const SearchDonorFilter = () => {
 
         {/* District */}
         <div className="relative inline-block text-left w-full lg:col-span-3">
-          <label className="text-ink block mb-1">Donor District</label>
+          <label className="text-ink block font-semibold mb-1">
+            Donor District
+          </label>
           <button
             type="button"
             onClick={() => setIsDistrictOpen(!isDistrictOpen)}
@@ -107,7 +132,9 @@ const SearchDonorFilter = () => {
 
         {/* Upazila */}
         <div className="relative inline-block text-left w-full lg:col-span-3">
-          <label className="text-ink block mb-1">Donor Upazila</label>
+          <label className="text-ink block font-semibold mb-1">
+            Donor Upazila
+          </label>
           <button
             type="button"
             disabled={!selectedDistrict}
@@ -149,6 +176,72 @@ const SearchDonorFilter = () => {
             Search
           </button>
         </div>
+      </div>
+
+      <div className="md:py-10">
+        {/* text show before search */}
+      {!hasSearched && (
+        <div className="max-w-7xl mx-auto mt-6 bg-white border border-crimson/20 rounded-2xl shadow-md p-10 flex flex-col items-center text-center">
+          <div className="w-16 h-16 rounded-full bg-crimson/10 flex items-center justify-center mb-4">
+            <svg
+              className="w-8 h-8 text-crimson"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-ink text-lg font-semibold mb-1">Find a Donor</h3>
+          <p className="text-ink/60 text-sm max-w-sm">
+            Select blood group, district, and upazila above, then hit search to
+            find available donors near you.
+          </p>
+        </div>
+      )}
+
+      {/* table show after find data */}
+      {hasSearched && donors.length > 0 && <SearchDonorTable data={donors} selectedDistrictLabel={selectedDistrictLabel} selectedUpazilaLabel={selectedUpazilaLabel}  />}
+
+      {/* no donor found text show after search */}
+      {hasSearched && donors.length === 0 && (
+        <div className="max-w-7xl mx-auto mt-6 bg-white border border-crimson/20 rounded-2xl shadow-md p-10 flex flex-col items-center text-center">
+          <div className="w-16 h-16 rounded-full bg-crimson/10 flex items-center justify-center mb-4">
+            <svg
+              className="w-8 h-8 text-crimson"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-ink text-lg font-semibold mb-1">
+            No Donor Found
+          </h3>
+          <p className="text-ink/60 text-sm max-w-sm">
+            We couldn't find any donor matching your selected blood group,
+            district, or upazila. Try adjusting your filters.
+          </p>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="mt-5 bg-crimson-dark text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-crimson transition-colors duration-150"
+          >
+            Reset Filters
+          </button>
+        </div>
+      )}
       </div>
     </div>
   );
