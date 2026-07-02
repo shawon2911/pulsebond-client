@@ -75,7 +75,8 @@ const DashboardNavbar = () => {
   const navItems = dashboardItems[role] || [];
 
   
-  const firstLetter = mounted && user?.name ? user.name.charAt(0) : "U";
+  // const firstLetter = mounted && user?.name ? user.name.charAt(0) : "U";
+  const firstLetter = mounted ? session?.user?.name : null;
 
   return (
     <div className="flex justify-between items-center px-5">

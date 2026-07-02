@@ -1,6 +1,6 @@
 
 
-export default function WelcomeMessage({ userName }) {
+export default function WelcomeMessage({ userName, role }) {
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -27,10 +27,19 @@ export default function WelcomeMessage({ userName }) {
             </span>
              👋
           </h1>
-          <p className="text-rose-50 text-sm md:text-base font-light max-w-xl leading-relaxed">
+          {
+            role === "admin" ?
+             (<>
+             <p className="text-rose-50 text-sm md:text-base font-light max-w-xl leading-relaxed">Platform overview at a glance</p>
+             </>
+             ) : 
+            (<>
+            <p className="text-rose-50 text-sm md:text-base font-light max-w-xl leading-relaxed">
             Your single drop of blood can bring a smile to a face and save a
             precious life. Thank you for being a hero! ❤️
           </p>
+            </>)
+          }
         </div>
 
         {/* Right Side: Quick Stats or Badge */}

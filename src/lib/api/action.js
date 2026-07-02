@@ -114,6 +114,17 @@ export const cancelBtn = async (id, token) => {
   return result;
 };
 
+export const stats = async(token) => {
+  const res = await fetch(`${baseURL}/stats`, {
+    cache: "no-store",
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  })
+  const result = await res.json();
+  return result;
+}
+
 // bloodGroup: "AB+";
 // createdAt: "2026-06-28T19:39:00.373Z";
 // donationDate: "2026-07-03";
