@@ -43,7 +43,7 @@ const MyDonationRequestsPage = async ({searchParams}) => {
     <div className="md:px-3">
       <div className="flex items-center md:gap-15 py-5">
              <h2 className="text-ink text-xl font-bold md:ml-3 mb-2">
-               All<span className="font-display text-2xl text-crimson">Donation</span>  Requests
+               All  <span className="font-display text-2xl text-crimson">Donation</span>  Requests
             </h2>
             <span className="flex items-center gap-2  ">
               <p className="text-ink text-xl font-bold"><span className="font-display text-2xl text-crimson">Filter</span> By:</p>

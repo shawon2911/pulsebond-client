@@ -74,7 +74,7 @@ const DashboardNavbar = () => {
 
   const navItems = dashboardItems[role] || [];
 
-  // 🌟 মাউন্ট হওয়ার আগে প্রথম অক্ষর 'U' ডিফল্ট থাকবে, মাউন্ট হলে ইউজারের প্রথম অক্ষর নিবে
+  
   const firstLetter = mounted && user?.name ? user.name.charAt(0) : "U";
 
   return (
@@ -134,7 +134,7 @@ const DashboardNavbar = () => {
       </Drawer>
 
       <div className="hidden w-full md:flex md:justify-between md:px-10">
-        <h1 className="text-xl font-semibold text-gray-800">
+        <h1 className="text-xl font-bold text-gray-800">
           {pageTitle === "donor" ||
           pageTitle === "admin" ||
           pageTitle === "volunteer"

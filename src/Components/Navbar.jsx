@@ -178,7 +178,7 @@ const Navbar = () => {
 
                     <Dropdown.Item id="copy-link" textValue="Copy link">
                       <Link
-                        href={`/dashboard/${user?.role}-profile`}
+                        href={`/dashboard/profile`}
                         className="flex items-center gap-2 py-2 px-3 rounded-md text-gray-700  hover:text-red-700 transition"
                       >
                         <CgProfile />

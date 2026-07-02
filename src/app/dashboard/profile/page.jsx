@@ -20,6 +20,7 @@ const UserProfilePage = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedUpazila, setSelectedUpazila] = useState("");
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+  
   const { data: session } = authClient.useSession();
   const user = session?.user; // Direct session data
 
