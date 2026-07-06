@@ -3,19 +3,14 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-const Filtering = () => {
+const Filtering = ({options}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname()
   // console.log("pathname", pathname)
    const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState("All");
-    const options = [
-    { value: "all", label: "All" },
-    { value: "pending", label: "Pending" },
-    { value: "inprogress", label: "Inprogress" },
-    { value: "Done", label: "Done" }
-  ];
+ 
 
   
 

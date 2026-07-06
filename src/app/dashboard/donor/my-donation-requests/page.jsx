@@ -5,27 +5,32 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-
-
-const MyDonationRequestsPage = async ({searchParams}) => {
-  const {status = "all"} = await searchParams;
+const MyDonationRequestsPage = async ({ searchParams }) => {
+  const { status = "all" } = await searchParams;
   const session = await auth.api.getSession({
-    headers: await headers()
-  })
+    headers: await headers(),
+  });
   const user = session?.user;
   const email = user?.email;
   // console.log({ user: user, email: email });
 
-  if (!email){
-    redirect("/signin")
+  if (!email) {
+    redirect("/signin");
   }
- 
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bloodReq?email=${email}&status=${status}`,
+  const options = [
+    { value: "all", label: "All" },
+    { value: "pending", label: "Pending" },
+    { value: "inprogress", label: "Inprogress" },
+    { value: "Done", label: "Done" },
+  ];
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/bloodReq?email=${email}&status=${status}`,
     {
       cache: "no-store",
-  },
-);
+    },
+  );
   const result = await res.json();
   const allResult = result?.data;
   // console.log("allresult", allResult);
@@ -37,29 +42,31 @@ const MyDonationRequestsPage = async ({searchParams}) => {
       </div>
     );
   }
-  
 
   return (
     <div className="md:px-3">
       <div className="flex items-center md:gap-15 py-5">
-             <h2 className="text-ink text-xl font-bold md:ml-3 mb-2">
-               All  <span className="font-display text-2xl text-crimson">Donation</span>  Requests
-            </h2>
-            <span className="flex items-center gap-2  ">
-              <p className="text-ink text-xl font-bold"><span className="font-display text-2xl text-crimson">Filter</span> By:</p>
-              <Filtering />
-            </span>
-           </div>
+        <h2 className="text-ink text-xl font-bold md:ml-3 mb-2">
+          All{" "}
+          <span className="font-display text-2xl text-crimson">Donation</span>{" "}
+          Requests
+        </h2>
+        <span className="flex items-center gap-2  ">
+          <p className="text-ink text-xl font-bold">
+            <span className="font-display text-2xl text-crimson">Filter</span>{" "}
+            By:
+          </p>
+          <Filtering options={options} />
+        </span>
+      </div>
 
       {allResult.length !== 0 ? (
         <>
           <div className="">
-           
             <HomePagetable data={allResult} />
           </div>
         </>
       ) : (
-       
         <div className="md:mx-5 mt-6 flex flex-col items-center justify-center p-8 rounded-xl bg-crimson/10 border border-crimson/20 text-center">
           {/* Tumi chaile ekhane ekta Icon o use korte paro */}
           <div className="w-12 h-12 rounded-full bg-crimson flex items-center justify-center text-white text-2xl font-bold mb-3 shadow-md">
@@ -74,32 +81,11 @@ const MyDonationRequestsPage = async ({searchParams}) => {
           </p>
         </div>
       )}
-
     </div>
   );
 };
 
 export default MyDonationRequestsPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import HomePagetable from "@/Components/Dashboard/Donor/HomePagetable";
 // import { userDonationReq } from "@/lib/api/action";
