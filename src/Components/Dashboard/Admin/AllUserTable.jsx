@@ -1,4 +1,5 @@
 import { Avatar, Chip, Table } from "@heroui/react";
+import { ThreeDotButton } from "./ThreeDotButton";
 
 const AllUserTable = ({ data }) => {
   return (
@@ -11,14 +12,14 @@ const AllUserTable = ({ data }) => {
                 isRowHeader
                 defaultWidth="1fr"
                 id="user"
-                minWidth={160}
+                minWidth={220}
                 className="uppercase"
               >
                 user
                 <Table.ColumnResizer />
               </Table.Column>
               <Table.Column
-                defaultWidth="1fr"
+                defaultWidth="2fr"
                 id="email"
                 minWidth={220}
                 className="uppercase"
@@ -29,7 +30,7 @@ const AllUserTable = ({ data }) => {
               <Table.Column
                 defaultWidth="1fr"
                 id="role"
-                minWidth={200}
+                minWidth={220}
                 className="uppercase"
               >
                 role
@@ -38,7 +39,7 @@ const AllUserTable = ({ data }) => {
               <Table.Column
                 defaultWidth="1fr"
                 id="status"
-                minWidth={100}
+                minWidth={220}
                 className="uppercase"
               >
                 status
@@ -47,7 +48,7 @@ const AllUserTable = ({ data }) => {
               <Table.Column
                 defaultWidth="1fr"
                 id="action"
-                minWidth={100}
+                minWidth={220}
                 className="uppercase"
               >
                 <Table.ColumnResizer />
@@ -56,8 +57,8 @@ const AllUserTable = ({ data }) => {
 
             <Table.Body>
               {data.map((req) => (
-                <Table.Row key={req._id}>
-                  <Table.Cell>
+                <Table.Row key={req._id} >
+                  <Table.Cell  className={'capitalize'}>
                     <div className="flex items-center gap-2">
                       <Avatar size="sm" aria-label="Menu">
                         <Avatar.Image
@@ -71,9 +72,13 @@ const AllUserTable = ({ data }) => {
                     </div>
                   </Table.Cell>
                   <Table.Cell>{req.email}</Table.Cell>
-                  <Table.Cell>{req.role}</Table.Cell>
+                  <Table.Cell className={'capitalize'}>
+                    <Chip >
+                      {req.role}
+                    </Chip>
+                  </Table.Cell>
 
-                  <Table.Cell>
+                  <Table.Cell className={'capitalize'}>
                     <Chip
                       size="sm"
                       variant="soft"
@@ -82,7 +87,7 @@ const AllUserTable = ({ data }) => {
                       {req.status}
                     </Chip>
                   </Table.Cell>
-                  <Table.Cell>hello</Table.Cell>
+                  <Table.Cell><ThreeDotButton id={req?._id} role={req?.role} status={req?.status} /></Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>

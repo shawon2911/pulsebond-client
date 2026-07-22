@@ -178,7 +178,7 @@ const DashboardNavbar = () => {
               </div>
             </Dropdown.Popover>
           </Dropdown>
-          <p className="text-ink font-display font-bold">{user?.name || ""}</p>
+          <p className="text-ink font-display font-bold" suppressHydrationWarning>{user?.name || ""}</p>
         </div>
       </div>
     </div>
