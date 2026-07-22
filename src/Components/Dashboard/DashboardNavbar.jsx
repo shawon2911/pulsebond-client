@@ -64,11 +64,7 @@ const DashboardNavbar = () => {
         label: "All Requests",
         link: "/dashboard/admin/all-requests",
       },
-      {
-        icon: MdManageAccounts,
-        label: "Content Management",
-        link: "/dashboard/admin/content-management",
-      },
+      
     ],
   };
 

@@ -114,16 +114,30 @@ export const cancelBtn = async (id, token) => {
   return result;
 };
 
-export const stats = async(token) => {
+export const stats = async (token) => {
   const res = await fetch(`${baseURL}/stats`, {
     cache: "no-store",
     headers: {
-      authorization: `Bearer ${token}`
-    }
-  })
+      authorization: `Bearer ${token}`,
+    },
+  });
   const result = await res.json();
   return result;
-}
+};
+
+// export const getAllBloodRequests = async (token, status) => {
+//   const url = status
+//     ? `${baseURL}/admin/all-blood-requests?status=${status}`
+//     : `${baseURL}/admin/all-blood-requests`;
+//   const res = await fetch(url, {
+//     headers: {
+//       authorization: `Bearer ${token}`,
+//     },
+//     cache: "no-store",
+//   });
+//   const result = await res.json();
+//   return result;
+// };
 
 // bloodGroup: "AB+";
 // createdAt: "2026-06-28T19:39:00.373Z";
