@@ -34,7 +34,7 @@ export default async function DashboardSidebar() {
       { icon: "profile", label: "Profile", link: "/dashboard/profile" },
       { icon: "user", label: "All User", link: "/dashboard/admin/all-user" },
       { icon: "request", label: "All Requests", link: "/dashboard/admin/all-requests" },
-      { icon: "management", label: "Content Management", link: "/dashboard/admin/content-management" },
+      
     ],
   };
 

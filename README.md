@@ -1,36 +1,137 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
+# 🩸 Pulse Bond — Client
+ 
+A full-stack blood donation platform that connects donors with people in need. Built with Next.js App Router, featuring role-based dashboards, real-time donation request management, and donor search by location and blood group.
+ 
+---
+ 
+## 🌐 Live Demo
+ 
+- **Frontend:** [https://pulse-bond-client.vercel.app](https://pulse-bond-client.vercel.app)
+- **Backend:** [https://pulse-bond-server.vercel.app](https://pulse-bond-server.vercel.app)
+---
+ 
+## ✨ Features
+ 
+- 🔐 Authentication with Better Auth (JWT-based)
+- 👥 Role-based access control — Admin, Donor, Volunteer
+- 🩸 Create, edit, and manage blood donation requests
+- 🔎 Search donors by blood group, district, and upazila
+- 📊 Admin dashboard with full user & request management
+- 📍 Bangladesh geodata — district & upazila dropdowns
+- 📱 Responsive UI with dark-themed design
+- 🔒 Protected routes via Next.js middleware
+---
+ 
+## 🛠️ Tech Stack
+ 
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| UI Components | HeroUI |
+| Authentication | Better Auth + JWT |
+| Database | MongoDB |
+| Backend | Express.js |
+| Deployment | Vercel |
+ 
+---
+ 
+## 📁 Project Structure
+ 
+```
+pulse-bond-client/
+├── app/
+│   ├── (auth)/
+│   │   ├── signin/
+│   │   └── signup/
+│   ├── dashboard/
+│   │   ├── admin/
+│   │   │   ├── all-requests/
+│   │   │   └── all-users/
+│   │   ├── donor/
+│   │   └── volunteer/
+│   ├── donation-requests/
+│   │   └── [id]/
+│   └── layout.js
+├── Components/
+│   └── Dashboard/
+├── data/
+│   ├── districts.json
+│   └── upazilas.json
+├── lib/
+│   ├── auth.js
+│   ├── auth-client.js
+│   └── api/
+│       └── action.js
+└── middleware.js
+```
+ 
+---
+ 
+## 🚀 Getting Started
+ 
+### Prerequisites
+ 
+- Node.js 18+
+- MongoDB Atlas account
+- Vercel account (for deployment)
+### Installation
+ 
+1. Clone the repository
+```bash
+git clone https://github.com/shawon2911/pulsebond-client
+cd pulse-bond-client
+```
+ 
+2. Install dependencies
+```bash
+npm install
+```
+ 
+3. Create a `.env.local` file in the root directory
+```env
+NEXT_PUBLIC_SERVER_URL=http://localhost:5000
+BETTER_AUTH_SECRET=your_secret_here
+BETTER_AUTH_URL=http://localhost:3000
+```
+ 
+4. Run the development server
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ 
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+ 
+---
+ 
+## 🔐 Role-Based Access
+ 
+| Role | Access |
+|---|---|
+| **Admin** | Full access — manage all users and donation requests |
+| **Donor** | Create and manage own donation requests |
+| **Volunteer** | View and assist with donation requests |
+ 
+Route protection is handled via `middleware.js` using Better Auth session validation.
+ 
+---
+ 
+## 🌍 Environment Variables
+ 
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_SERVER_URL` | Backend API base URL |
+| `BETTER_AUTH_SECRET` | Secret key for Better Auth |
+| `BETTER_AUTH_URL` | Frontend base URL |
+ 
+---
+ 
+## 📦 Related Repository
+ 
+- **Backend (Express.js):** [pulse-bond-server](https://github.com/shawon2911/pulsebond-server)
+---
+ 
+## 📄 License
+ 
+This project is open source and available under the [MIT License](LICENSE).
