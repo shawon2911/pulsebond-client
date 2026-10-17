@@ -5,6 +5,7 @@ import { Button, Card, CardBody } from "@heroui/react";
 import { Calendar, Clock, HeartCrack, MapPin } from "lucide-react";
 import { BiLocationPlus } from "react-icons/bi";
 import Link from "next/link";
+import Pagination from "@/Components/pagination";
 export default async function AllDonationReqPage({ searchParams }) {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -14,14 +15,14 @@ export default async function AllDonationReqPage({ searchParams }) {
   const email = user?.email;
 
   const resolvedSearchParams = await searchParams;
-  const currentFilterStatus = resolvedSearchParams?.status || "all";
+  const status = resolvedSearchParams?.status || "all";
   const currentPage = parseInt(resolvedSearchParams?.page) || 1;
   const limit = 15;
 
   // Build URL with query params
   const queryParams = new URLSearchParams();
-  if (currentFilterStatus && currentFilterStatus !== "all") {
-    queryParams.append("status", currentFilterStatus);
+  if (status && status !== "all") {
+    queryParams.append("status", status);
   }
   queryParams.append("page", currentPage);
   queryParams.append("limit", limit);
@@ -113,7 +114,7 @@ export default async function AllDonationReqPage({ searchParams }) {
             </h3>
             <p className="text-sm text-slate-400 max-w-sm">
               There are currently no pending blood donation requests found.
-              We'll notify you when someone needs help!
+              We will notify you when someone needs help!
             </p>
           </div>
         )}
@@ -121,34 +122,12 @@ export default async function AllDonationReqPage({ searchParams }) {
 
       
       {pagination.totalPages > 1 && (
-        <div className="flex justify-center items-center gap-4 mt-8">
-          {/* Previous Button */}
-          <Link href={`/donation-requests?status=${currentFilterStatus}&page=${currentPage - 1}`}>
-          <Button 
-            
-            
-            isDisabled={currentPage <= 1}
-            variant="flat"
-          >
-            Previous
-          </Button></Link>
-
-          <span className="text-sm font-medium text-gray-600">
-            Page {currentPage} of {pagination.totalPages}
-          </span>
-
-          {/* Next Button */}
-          <Link href={`/donation-requests?status=${currentFilterStatus}&page=${currentPage + 1}`}>
-          <Button 
-            
-            
-            isDisabled={currentPage >= pagination.totalPages}
-            variant="flat"
-          >
-            Next
-          </Button>
-          </Link>
-        </div>
+        <Pagination
+          totalPages={pagination.totalPages}
+          currentPage={currentPage}
+          status={status}
+          basePath={"/donation-requests"}
+        />
       )}
     </section>
 
