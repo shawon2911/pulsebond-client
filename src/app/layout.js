@@ -2,6 +2,7 @@ import { Fraunces, Inter} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
+import BloodLoader from "@/Components/BloodLoader";
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="font-body bg-paper text-ink min-h-full flex flex-col">
+        <BloodLoader />
         <Navbar />
         {children}
         <Footer />
